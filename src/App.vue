@@ -1,36 +1,36 @@
 <template>
   <Header></Header>
-  <Home msg="Welcome to Your Vue.js App"/>
+  <router-view/>
 </template>
 
 <script>
-import Home from './views/Home.vue'
 import Header from './components/Header.vue'
-
 export default {
-  name: 'App',
-  components: {
-    Home,
+  components:{
     Header
-  },
+  }
 }
 </script>
 
+
 <style>
   :root{
-    --back_grey : #212121;
-    --white_text : whitesmoke;
+    --back_grey:#202020;
+    --text_white:whitesmoke;
   }
-  body{
+  *{
     margin: 0px;
+    padding: 0px;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: var(--white_text);
+    color: var(--text_white);
     background-color: var(--back_grey);
-    /* margin-top: 60px; */
+  }
+  .overflow_hidden{
+      overflow: hidden;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1 class="title">Actualités</h1>
+  <div class="shop">
+    <h1 class="title">Shop</h1>
     <ul class="list_cards">
       <Card
         v-for="(card, index) in cards" :key="index"
@@ -16,7 +16,7 @@
 // @ is an alias to /src
   import Card from '@/components/Card.vue'
 export default {
-  name: 'Home',
+  name: 'Shop',
   components: {
     Card
   },
@@ -30,13 +30,13 @@ export default {
           to:"/article/02023323",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         },{
-          type:"Album",
+          type:"T-shirt",
           title:"Article",
           img:"",
           to:"/article/02023323",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         },{
-          type:"Event",
+          type:"T-shirt",
           title:"Article",
           img:"",
           to:"/article/02023323",
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style scoped>
-  .home{
+  .shop{
     display: flex;
     flex-direction: column;
   }
