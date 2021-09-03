@@ -8,6 +8,7 @@
               <li class="link_container"><router-link v-on:click="setModalState()" to="/">Home</router-link></li>
               <li class="link_container"><router-link v-on:click="setModalState()" to="/shop">Shop</router-link></li>
               <li class="link_container"><router-link v-on:click="setModalState()" to="/events">Events</router-link></li>
+              <li class="link_container"><router-link v-on:click="setModalState()" to="/boutique?id=651655">Boutique</router-link></li>
           </ul>
       </nav>
   </header>
