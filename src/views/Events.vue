@@ -27,25 +27,25 @@ export default {
         {
           type:"T-shirt",
           title:"Article",
-          to:"/article/02023323",
+          to:"/event?id=02023323",
           img:"/events/event.jpg",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         },{
           type:"Album",
           title:"Article",
-          to:"/article/02023323",
+          to:"/event?id=02023323",
           img:"/events/event_1.png",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         },{
           type:"Event",
           title:"Article",
-          to:"/article/02023323",
+          to:"/event?id=02023323",
           img:"/events/event_3.png",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         },{
           type:"T-shirt",
           title:"Article",
-          to:"/article/02023323",
+          to:"/event?id=02023323",
           img:"/events/event_4.png",
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         }

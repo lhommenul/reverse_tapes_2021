@@ -5,20 +5,20 @@
         <h2>Informations</h2> 
         <hr>
         <ul class="list_infos">
-          <li>
-            <img src="" alt="icon">
+          <li class="row">
+            <img src="@/assets/price_white.svg" alt="icon">
             <p>Gratuit</p>
           </li>
-          <li>
-            <img src="" alt="icon">
+          <li class="row">
+            <img src="@/assets/location_white.svg" alt="icon">
             <p>Canadian Café</p>
           </li>
-          <li class="classez">
-            <img src="" alt="icon">
+          <li class="classez row">
+            <img src="@/assets/date_white.svg" alt="icon">
             <p>Jeudi 17 Décembre 2019</p>
           </li>
-          <li>
-            <img src="" alt="icon">
+          <li class="row">
+            <img src="@/assets/clock_white.svg" alt="icon">
             <ul>
               <li>Début:15H00</li>
               <li>Fin:19H00</li>
@@ -162,6 +162,7 @@ export default {
         display: grid;
         grid-template-rows: repeat(2,1fr);
         grid-template-columns: repeat(2,1fr);
+        gap: 0.5rem;
       }
     .container_groupes_info{
       grid-column: 2;
@@ -176,6 +177,9 @@ export default {
         overflow: scroll;
       }
       .see_more_events{
+        font-size: 1.4rem;
+        margin-bottom: 2em;
+        margin-top: 1em;
         place-self: center;
         padding: 0.5rem 1rem;
         border-radius: 3rem;
@@ -185,6 +189,11 @@ export default {
         .see_more_events > a{
           color: var(--gack_grey);
           text-decoration: none;
+        }
+        .row{
+          align-self: start;
+          display: flex;
+          flex-direction: row;
         }
       
 </style>

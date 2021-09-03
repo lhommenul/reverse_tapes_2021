@@ -1,18 +1,18 @@
 <template>
     <li class="container_article_artist" :style="{height:height,width:width,'min-width':width}">
         <article class="container_info_event">
-            <h3>Grand Veymont</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe officiis consectetur assumenda perferendis repellendus, asperiores mollitia suscipit totam? Unde suscipit adipisci obcaecati quam, illo totam ad? Minima molestias aliquam eum?</p>
-            <button>voir plus</button>
-            <ul>
+            <h3 class="spacer">Grand Veymont</h3>
+            <p class="spacer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe officiis consectetur assumenda perferendis repellendus, asperiores mollitia suscipit totam? Unde suscipit adipisci obcaecati quam, illo totam ad? Minima molestias aliquam eum?</p>
+            <button class="spacer">voir plus</button>
+            <ul class="spacer list_socials">
                 <li>
-                    <img src="" alt="facebook icon">
+                    <img class="icon_social" src="@/assets/facebook.png" alt="facebook icon">
                 </li>
                 <li>
-                    <img src="" alt="instagram icon">
+                    <img class="icon_social" src="@/assets/instagram.png" alt="instagram icon">
                 </li>
                 <li>
-                    <img src="" alt="youtube icon">
+                    <img class="icon_social" src="@/assets/youtube.png" alt="youtube icon">
                 </li>
             </ul>
         </article>
@@ -36,6 +36,9 @@ export default {
         max-width: 300px;
         margin-right: 1rem;
     }
+        .spacer{
+            margin: 1rem;
+        }
         .container_info_event{
             height: 100%;
             width: 100%;
@@ -43,4 +46,14 @@ export default {
             display: grid;
             grid-template-rows: repeat(3,auto) 20%;
         }
+            .list_socials{
+                padding: 0rem 1.5rem;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+                .icon_social{
+                    height: 30px;
+                    width: 30px;
+                }
 </style>
