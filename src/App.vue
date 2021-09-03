@@ -17,12 +17,15 @@ export default {
   :root{
     --back_grey:#202020;
     --text_white:whitesmoke;
+    --beige:#FFF5CA;
   }
   *{
     margin: 0px;
     padding: 0px;
+    list-style: none;
   }
   #app {
+    min-height: 100vh;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

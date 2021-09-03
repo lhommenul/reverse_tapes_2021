@@ -5,9 +5,9 @@
           <button class="btn_nav" v-on:click="setModalState()" v-on:focus="setModalState()"><img class="icon_menu_nav" src="@/assets/menu_white_icon.svg" alt="menu icon"></button>
           <ul class="list_elements" :class="{ open_modal: modal.state,close_modal: modal.state === false }">
               <button class="button_close_modal" v-on:click="setModalState()">close</button>
-              <li class="link_container"><router-link to="/">Home</router-link></li>
-              <li class="link_container"><router-link to="/shop">Shop</router-link></li>
-              <li class="link_container"><router-link to="/events">Events</router-link></li>
+              <li class="link_container"><router-link v-on:click="setModalState()" to="/">Home</router-link></li>
+              <li class="link_container"><router-link v-on:click="setModalState()" to="/shop">Shop</router-link></li>
+              <li class="link_container"><router-link v-on:click="setModalState()" to="/events">Events</router-link></li>
           </ul>
       </nav>
   </header>
@@ -33,7 +33,9 @@ export default {
   methods: {
     setModalState(){
         this.modal.state = !this.modal.state;
+
         const main_container = document.querySelector('body');
+        
         if (main_container.classList.contains('overflow_hidden')) {
             main_container.classList.remove('overflow_hidden')
         } else {
@@ -97,7 +99,7 @@ export default {
                     width: 50px;
                 }
                 .link_container{
-                    
+                    font-size: 2em;
                 }
                     .link_container a{
                         text-decoration: none;
@@ -107,6 +109,13 @@ export default {
     @media screen and (min-width:400px) {
         .list_elements{
             display: flex;
+            flex-direction: row;
+            place-items: center;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        .button_close_modal{
+            display: none;
         }
         .btn_nav{
             display: none;
