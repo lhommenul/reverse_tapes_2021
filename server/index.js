@@ -21,7 +21,8 @@ const db = mysql.createConnection({
 db.connect(function(err) {
     if (err) throw err;
     console.log("Connecté à la base de données MySQL!");
-    db.query("SHOW DATABASES", function (err, result) {
+    const query = "SELECT * FROM `user`";
+    db.query(query, function (err, result) {
         if (err) throw err;
         console.log(result);
       });
