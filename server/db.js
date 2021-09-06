@@ -1,14 +1,16 @@
 const mysql = require('mysql');
 
+require('dotenv').config();
+
 const db = mysql.createConnection({
 
-    host: "109.20.225.173",
+    host: process.env.DB_HOST,
  
-    port:20562,
+    port:process.env.DB_PORT,
 
-    user: "root",
+    user: process.env.DB_USER,
  
-    password: "NgRGyN9iz8AbR8q3FCQ8Ky3",
+    password: process.env.DB_PASS,
 
     database:"reversetapes"
  
