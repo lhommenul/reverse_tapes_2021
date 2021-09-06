@@ -57,12 +57,20 @@ CREATE TABLE IF NOT EXISTS `product` (
 ) ENGINE = 'InnoDB';    
 
 
+DROP TABLE IF EXISTS `product_has_image`; 
+
+CREATE TABLE IF NOT EXISTS `product_has_image`(
+    `product_id` INT NOT NULL,
+    `picture_id` INT NOT NULL,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`id`),
+    FOREIGN KEY (`picture_id`) REFERENCES `picture`(`date_id`),
+    PRIMARY KEY(`product_id`,`picture_id`)
+)
+
+
+
 
 -- PROCEDURE
--- path
--- file_name
--- date_id
-
 
 DROP PROCEDURE IF EXISTS `add_picture`;
 DELIMITER $$
