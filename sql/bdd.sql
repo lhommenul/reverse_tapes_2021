@@ -67,9 +67,6 @@ CREATE TABLE IF NOT EXISTS `product_has_image`(
     PRIMARY KEY(`product_id`,`picture_id`)
 )
 
-
-
-
 -- PROCEDURE
 
 DROP PROCEDURE IF EXISTS `add_picture`;
@@ -84,5 +81,3 @@ CREATE PROCEDURE `add_picture`(
         INSERT INTO `picture`  (`picture_path`,`file_name`,`date_id`) VALUES (picture_path,file_name,@date_id);
     END $$
 DELIMITER ;
-
-CALL `picture`(2,5,0);

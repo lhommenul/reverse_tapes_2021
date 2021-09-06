@@ -1,22 +1,31 @@
 const sharp = require('sharp');
-const fs = require('fs');
+const db = require('./db');
 
-fs.readFile('./public/pochette_1.jpg',(err,data)=>{
-    if (err) {
-        throw err;
-    } else {
-        sharp(data)
-          .resize(1000, 1000)
-          .toFile('test.webp', (err, info) => { 
-              if (err) {
-                  throw err;
-              } else {
-                  console.log(info);
-              }
-           });
-    }
-})
+const minifyAndStore = (file_buffer,height=1000,width=1000)=>{
+    const file_name = `picture_${new Date().getTime()}_${Math.floor(Math.random()*100000)}.webp`;
+    const path = `./public/pictures`;
+    const minified_picture =  sharp(file_buffer)
+        .toFile(`${path}/${file_name}`, (err, info) => { 
+            if (err) {
+                throw err;
+            } else {
+                console.log(info);
+            }
+    });
+
+    const query = `CALL add_picture('${path}','${file_name}')` 
+
+    db.query(query,(err,result)=>{
+        if (err) {
+            throw err;
+        } else {
+            console.log(result);
+        }
+    })
+
+    return minified_picture;
+}
 
 module.exports = {
-    sharp
+    minifyAndStore
 }

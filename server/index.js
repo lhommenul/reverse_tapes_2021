@@ -1,10 +1,21 @@
 const express = require('express');
 const app = express();
-const router = require("./route");
+const adminRouter = require("./adminRouter");
+const basicRouter = require("./basicRouter");
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
 const {checkToken} = require('./auth');
 
 require('dotenv').config(); // Env files
+
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+//add other middleware
+app.use(cors());
 
 app.use(cookieParser());
 
@@ -14,7 +25,9 @@ app.use(express.json());
 
 app.use(checkToken)
 
-app.use(router);
+app.use("/",basicRouter);
+
+app.use("/admin",adminRouter);
 
 app.use('/static', express.static(__dirname + '/public'));
 
