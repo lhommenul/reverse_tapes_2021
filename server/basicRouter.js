@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
 })
 
 router.post('/connection',checkToken,function (req, res) {
-    res.send('connecction')
+  res.send()
 })
 
 

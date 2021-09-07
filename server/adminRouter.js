@@ -2,8 +2,15 @@ const express = require('express')
 const router = express.Router();
 const db = require('./db');
 const {minifyAndStore} = require('./utils');
+const {checkToken} = require('./auth');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+router.use(checkToken)
+
+router.post('/test', (req, res) =>{
+    res.send("ok")
+})
 
 router.post('/adduser', async (req, res) =>{
     if (req.body.first_name && req.body.name && req.body.email && req.body.password) {
