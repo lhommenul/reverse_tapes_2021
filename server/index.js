@@ -5,9 +5,8 @@ const basicRouter = require("./basicRouter");
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
-const {checkToken} = require('./auth');
 
-require('dotenv').config(); // Env files
+require('dotenv').config({path:"./.env"}); 
 
 // enable files upload
 app.use(fileUpload({
@@ -22,8 +21,6 @@ app.use(cookieParser());
 app.use(require('body-parser').urlencoded({ extended: false }));
 
 app.use(express.json());
-
-app.use(checkToken)
 
 app.use("/",basicRouter);
 

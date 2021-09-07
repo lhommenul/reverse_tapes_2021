@@ -27,7 +27,6 @@ const checkToken = (req, res, next)=>{
             console.log(req.body.email);
             console.log(req.body.password);
             const query = `SELECT * FROM user WHERE email='${req.body.email}';`
-            const query = `SELECT * FROM user WHERE email='${req.body.email}';`
             db.query(query,(err,res)=>{
                 if (err) {
                     throw err;

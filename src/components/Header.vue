@@ -2,7 +2,7 @@
   <header class="nav_header">
       <img class="logo_header" src="@/assets/logo.png" alt="reverse tapes logo">
       <nav class="nav_container" >
-          <button class="btn_nav" v-on:click="setModalState()" v-on:focus="setModalState()"><img class="icon_menu_nav" src="@/assets/menu_white_icon.svg" alt="menu icon"></button>
+          <button class="btn_nav" v-on:click="setModalState()"><img class="icon_menu_nav" src="@/assets/menu_white_icon.svg" alt="menu icon"></button>
           <ul class="list_elements" :class="{ open_modal: modal.state,close_modal: modal.state === false }">
               <button class="button_close_modal" v-on:click="setModalState()">close</button>
               <li class="link_container"><router-link v-on:click="setModalState()" to="/">Home</router-link></li>
