@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AddProduct from '@/views/panel/AddProduct'
+import AddBand from '@/views/panel/AddBand'
 
 Vue.use(VueRouter)
 
@@ -72,8 +73,8 @@ const routes = [
       {
         // UserPosts will be rendered inside User's <router-view>
         // when /user/:id/posts is matched
-        path: 'posts',
-        component: AddProduct
+        path: 'addband',
+        component: AddBand
       }
     ],
     // route level code-splitting

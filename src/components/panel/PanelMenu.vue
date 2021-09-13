@@ -1,7 +1,8 @@
 <template>
     <nav>
         <ul>
-            <router-link to="/panel/addproduct">Add Product</router-link>
+            <router-link to="/panel/addproduct">Ajouter un Produit</router-link>
+            <router-link to="/panel/addband">Ajouter un Groupe</router-link>
         </ul>
     </nav>
 </template>
