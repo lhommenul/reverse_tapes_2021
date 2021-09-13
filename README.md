@@ -1,4 +1,4 @@
-# reverse_tapes
+# reversetapes
 
 ## Project setup
 ```
