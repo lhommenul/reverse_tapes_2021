@@ -1,3 +1,4 @@
+
 <template>    
   <section id="app">
     <Header></Header>
@@ -10,6 +11,7 @@ import Header from './components/Header.vue'
 export default {
   components:{
     Header
+
   }
 }
 </script>
@@ -38,7 +40,7 @@ export default {
   .overflow_hidden{
       overflow: hidden;
   }
-w_hidden{
+  .w_hidden{
       overflow: hidden;
   }
-</style>
+<style>
