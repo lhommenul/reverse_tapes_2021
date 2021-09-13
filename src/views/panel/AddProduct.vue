@@ -54,25 +54,30 @@
                 placeholder="rouge , vert"
             ></v-text-field>
             <!-- Type -->
-
             <v-select
-                :items="items_haut"
+                :items="items_type"
                 filled
                 v-model="form.size"
-                label="Haut"
+                label="Select Type"
             ></v-select>
-            <v-select
-                :items="items_bas"
-                filled
-                v-model="form.size"
-                label="Bas"
-            ></v-select>                
-            <v-select
-                :items="items_shose"
-                filled
-                v-model="form.size"
-                label="Chaussures"
-            ></v-select>      
+                <v-select
+                    :items="items_haut"
+                    filled
+                    v-model="form.size"
+                    label="Haut"
+                ></v-select>
+                <v-select
+                    :items="items_bas"
+                    filled
+                    v-model="form.size"
+                    label="Bas"
+                ></v-select>                
+                <v-select
+                    :items="items_shose"
+                    filled
+                    v-model="form.size"
+                    label="Chaussures"
+                ></v-select>      
 
             <!-- Come to get it -->
             <v-checkbox
@@ -124,6 +129,7 @@ import AddPicture from '@/components/panel/AddPicture'
 export default {
     data() {
         return {
+            items_type: ["Chaussure","Haut","Bas","Vinyle","Cd"],
             items_haut: ['M', 'L', 'XL', 'XXL'],
             items_bas: ['30', '31', '32', '33', '34', '35','36', '37', '38', '39', '40', '41'],
             items_shose: ['M', 'L', 'XL', 'XXL'],
