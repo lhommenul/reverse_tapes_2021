@@ -1,6 +1,6 @@
 <template>
     <ul>
-        
+
     </ul>
 </template>
 

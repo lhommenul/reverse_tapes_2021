@@ -7,8 +7,10 @@
                 <button class="btn_modify">Modifier</button>
                 <button class="btn_delete" v-on:click="deleteProduct(product.id)">Supprimer</button>
             </li>
+            
         </ul>
-        <form action="" v-on:submit="addProduct">
+        <!-- ADD PRODUCT -->
+        <form class="center content-inputs" action="" v-on:submit="addProduct">
             <!-- Name
              -->
             <label>
@@ -18,7 +20,15 @@
             <!-- Type -->
             <label>
                 Type
-                <input required type="number" v-model="form.type" name="type" placeholder="type">
+                 <vs-input
+                    required
+                    type="number"
+                    label="Name"
+                    v-model="form.type"
+                    name="type"
+                    placeholder="type"
+                />
+                <!-- <input required type="number" v-model="form.type" name="type" placeholder="type"> -->
             </label>
             <!-- Description -->
             <label>
@@ -68,8 +78,9 @@ export default {
     data() {
         return {
             form:{
-                type:undefined,
+                type:0,
                 description:undefined,
+                
                 color:undefined,
                 size:undefined,
                 come_to_get_it:false,
