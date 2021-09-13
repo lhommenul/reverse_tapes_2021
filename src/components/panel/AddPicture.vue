@@ -1,26 +1,43 @@
 <template>
-    <ul>
-        <li v-for="(picture, index) in pictures" :key="index">
-            <input type="file">
-            <button v-on:click="deleteInputPicture(index)" type="button">delete</button>
-            {{index}}
-        </li>
+    <ul class="container_img">
+
     </ul>
-    <button v-on:click="pictures.push({})" type="button">Ajouter une photo</button>
+    <button class="uk-button uk-button-secondary" v-on:click="generateInput()" type="button">Ajouter une photo</button>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            pictures:[
-                
-            ]
         }
     },
     methods: {
-        deleteInputPicture(index){
-            console.log(index);
+        deleteInputPicture(delete_index){
+            this.pictures = this.pictures.filter((value,index)=>{
+                if (delete_index !== index) {
+                    return value;
+                }
+            })
+        },
+        generateInput(){
+            const container = document.querySelector('.container_img');
+                const list_element = document.createElement('li');
+                    const input = document.createElement('input');
+                    const button = document.createElement('button');
+
+            (()=>{
+                input.type="file"
+                button.className= "uk-button uk-button-danger"
+                button.type = "button"
+                button.textContent = "delete"
+
+                button.addEventListener('click',()=>{
+                    list_element.remove()
+                })
+            })();
+            list_element.appendChild(input)
+            list_element.appendChild(button)
+                container.appendChild(list_element)
         }
     },
 }

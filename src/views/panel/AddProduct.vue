@@ -1,62 +1,64 @@
 <template>
     <div>
         <ul class="list_products">    
-            <li class="product" v-for="(product) in list_products" :key="product.id">
-                <h2>{{product.name}}</h2>
+            <li class="uk-card uk-card-default uk-card-body" v-for="(product) in list_products" :key="product.id">
+                <h3 class="uk-card-title">{{product.name}}</h3>
                 <p>{{product.description}}</p>
-                <button class="btn_modify">Modifier</button>
-                <button class="btn_delete" v-on:click="deleteProduct(product.id)">Supprimer</button>
+                <div>
+                    <button class="uk-button uk-button-secondary">Modifier</button>
+                    <button class="uk-button uk-button-danger" v-on:click="deleteProduct(product.id)">Supprimer</button>
+                </div>
             </li>
         </ul>
-        <form action="" v-on:submit="addProduct">
+        <form class="uk-search uk-search-default" v-on:submit="addProduct">
             <!-- Name
              -->
             <label>
                 Name
-                <input required type="text" v-model="form.name" name="name" placeholder="Nom du produit">
+                <input class="uk-search-input" required type="text" v-model="form.name" name="name" placeholder="Nom du produit">
             </label>
             <!-- Type -->
             <label>
                 Type
-                <input required type="number" v-model="form.type" name="type" placeholder="type">
+                <input class="uk-search-input" required type="number" v-model="form.type" name="type" placeholder="type">
             </label>
             <!-- Description -->
             <label>
                 Description
-                <textarea name="description" v-model="form.description" placeholder="description">
+                <textarea class="uk-search-input" name="description" v-model="form.description" placeholder="description">
 
                 </textarea>
             </label>
             <!-- Color -->
             <label>
                 Color
-                <input required type="text" v-model="form.color" name="color" placeholder="color">
+                <input class="uk-search-input" required type="text" v-model="form.color" name="color" placeholder="color">
             </label>
             <!-- Type -->
             <label>
                 Size
-                <input required type="number" v-model="form.size" name="size" placeholder="size">
+                <input class="uk-search-input" required type="number" v-model="form.size" name="size" placeholder="size">
             </label>    
             <!-- Come to get it -->
             <label>
                 Come to get it
-                <input type="checkbox" v-model="form.come_to_get_it" name="come_to_get_it">
+                <input class="uk-search-input" type="checkbox" v-model="form.come_to_get_it" name="come_to_get_it">
             </label>    
             <!-- Type -->
             <label>
                 Prix HT
-                <input required type="number" v-model="form.price_ht" name="price_ht" placeholder="Prix hors taxes">
+                <input class="uk-search-input" required type="number" v-model="form.price_ht" name="price_ht" placeholder="Prix hors taxes">
             </label>    
              <label>
                 Prix TTC
-                <input required type="number" v-model="form.price_ttc" name="price_ttc" placeholder="Prix avec taxes">
+                <input class="uk-search-input" required type="number" v-model="form.price_ttc" name="price_ttc" placeholder="Prix avec taxes">
             </label>                              
             <label>
                 Quantité
-                <input required type="number" v-model="form.quantity" name="quantity" placeholder="exemple : 50">
+                <input class="uk-search-input" required type="number" v-model="form.quantity" name="quantity" placeholder="exemple : 50">
             </label>          
             <AddPicture></AddPicture>
-            <button>Ajouter le produit</button>                                                                         
+            <button class="uk-button uk-button-primary">Ajouter le produit</button>                                                                         
         </form>
     </div>
 </template>

@@ -69,8 +69,8 @@ const routes = [
       {
         // UserPosts will be rendered inside User's <router-view>
         // when /user/:id/posts is matched
-        path: 'posts',
-        component: AddProduct
+        path: 'addband',
+        component: () => import(/* webpackChunkName: "about" */ '../views/panel/AddBand.vue')
       }
     ],
     // route level code-splitting

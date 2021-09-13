@@ -12,6 +12,8 @@ router.post('/test', (req, res) =>{
     res.send("ok")
 })
 
+// ADD
+
 router.post('/adduser', async (req, res) =>{
     if (req.body.first_name && req.body.name && req.body.email && req.body.password) {
 
@@ -83,6 +85,27 @@ router.post('/addproduct', (req, res) => {
                 res
                     .status(200)
                     .send({message:"token has been created"});
+            }
+        });
+
+    }else{
+        res.status(400).send({message:"error while checking data in the form"})
+    }
+})
+
+router.post('/addband', (req, res) => {
+    
+    if (req.body.name && req.body.description){
+       
+        const query = `INSERT INTO band (name,description) VALUES ("${req.body.name}","${req.body.description}");`;
+        
+        db.query(query, function (err, result) {
+            if (err) throw err;
+            else{
+                console.log("Band has been added");
+                res
+                    .status(200)
+                    .send({message:"Band has been added"});
             }
         });
 

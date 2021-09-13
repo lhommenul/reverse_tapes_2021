@@ -140,5 +140,17 @@ router.get('/getproduct', function (req, res) {
   })
 })
 
+router.get('/getband', function (req, res) {
+  const query = "SELECT * FROM band"
+  db.query(query,(err,response)=>{
+    if (err) throw err; 
+    else {
+      console.log(response);
+      res.send(response);
+    }
+  })
+})
+
+
 
 module.exports = router;
