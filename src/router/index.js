@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import AddProduct from '@/views/panel/AddProduct'
 
 const routes = [
   {
@@ -45,7 +46,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Boutique.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateAccount.vue')
   },
   {
     path: '/connection',
@@ -54,7 +55,29 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Connection.vue')
-  }
+  },
+  {
+    path: '/panel',
+    name: 'Panel',
+    children: [
+      {
+        // UserProfile will be rendered inside User's <router-view>
+        // when /user/:id/profile is matched
+        path: 'addproduct',
+        component: AddProduct
+      },
+      {
+        // UserPosts will be rendered inside User's <router-view>
+        // when /user/:id/posts is matched
+        path: 'posts',
+        component: AddProduct
+      }
+    ],
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/panel/Panel.vue')
+  },
 ]
 
 const router = createRouter({

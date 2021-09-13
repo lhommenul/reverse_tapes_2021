@@ -26,6 +26,10 @@ app.use("/",basicRouter);
 
 app.use("/admin",adminRouter);
 
+// STATIC DATA
+
+app.use('/', express.static(__dirname + '/dist'));
+
 app.use('/static', express.static(__dirname + '/public'));
 
 
