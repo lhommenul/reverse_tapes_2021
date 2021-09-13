@@ -42,7 +42,7 @@
             <!-- Come to get it -->
             <label>
                 Come to get it
-                <input class="uk-search-input" type="checkbox" v-model="form.come_to_get_it" name="come_to_get_it">
+                <input class="uk-checkbox" type="checkbox" name="come_to_get_it" v-model="form.come_to_get_it">
             </label>    
             <!-- Type -->
             <label>

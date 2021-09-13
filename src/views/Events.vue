@@ -65,13 +65,17 @@ export default {
       margin-left: 1rem;
       text-align: left;
     }
+    ul{
+      margin: 0px;
+      padding: 0px;
+    }
     .list_cards{
       margin: 0px;
+      padding: 0px;
       margin-top:1rem;
       margin-left: 1rem;
       column-gap: 1em;
       list-style: none;
-      padding: 0px;
       overflow: scroll;
       display: flex;
       flex-direction: row;
