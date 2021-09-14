@@ -5,7 +5,7 @@
             <h2>Liste des groupes</h2>
             <div v-for="(band, index) in bands" :key="index" class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">{{band.name}}</h3>
-                <button class="uk-button uk-button-danger">Supprimer</button>    
+                <button class="uk-button uk-button-danger" v-on:click="deleteBand(band)">Supprimer</button>    
                 <button class="uk-button uk-button-secondary">Modifier</button>    
             </div>
         </div>
@@ -22,7 +22,7 @@
                         Description
                         <input class="uk-input" v-model="form.description" type="text" placeholder="Je vie ....">
                     </label>
-                    <div class="uk-margin">
+                    <div class="uk-margin pictures_container">
                         <AddPicture></AddPicture>
                     </div>
 
@@ -62,17 +62,55 @@ export default {
             })
         },
         addBand(){
-            axios.post(this.server_address+"/admin/addband",this.form)
+            const container = document.querySelector('.pictures_container');
+            const list_input_files = container.querySelectorAll('input');
+
+            const addband = (list_id=[])=>{
+
+                let copy = this.form;
+                copy.list_id = list_id;
+                
+                axios.post(this.server_address+"/admin/addband",copy)
+                .then(data=>{
+                    console.log(data);
+                    this.getBands()
+                })
+                .catch(err=>{
+                    console.error(err);
+                })                
+            }
+
+            if (list_input_files.length > 0) {      
+                const formData = new FormData();
+
+                list_input_files.forEach(input => {
+                    formData.append("image", input.files[0]);                
+                });
+
+                axios.post(this.server_address+'/admin/addpicture', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })             
+                .then((data)=>{
+                    addband(data.data);
+                })  
+                .catch(err=>{
+                    console.error(err);
+                })  
+
+            }else{
+                addband();
+            }
+        },
+        deleteBand({id}){
+            axios.post(this.server_address+"/admin/deleteband",{id:id})
             .then(data=>{
                 console.log(data);
-                this.getBands()
             })
             .catch(err=>{
                 console.error(err);
             })
-        },
-        deleteBand(){
-
         },
         modifyBand(){
 

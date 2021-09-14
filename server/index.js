@@ -5,8 +5,18 @@ const basicRouter = require("./basicRouter");
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 require('dotenv').config({path:"./.env"}); 
+
+
+mongoose.connect('mongodb+srv://reversetapes:OSFE4CixOcnp6La3@cluster0.xa3z5.mongodb.net/reversetapes?retryWrites=true&w=majority')
+.then(()=>{
+    console.log("Connected to the bdd MongoDb");
+})
+.catch(err=>{
+    console.error(err);
+})
 
 // enable files upload
 app.use(fileUpload({

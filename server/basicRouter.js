@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const db = require('./db');
 const bcrypt = require('bcrypt');
+const User = require('./schema/User')
 const {setToken,checkToken} = require("./auth.js");
 const saltRounds = 10;
 
@@ -91,30 +92,35 @@ router.post('/createaccount',function (req, res) {
         console.log(req.body);
           console.log("Hash has been generated");
 
-          const query = `INSERT INTO user (name,first_name,email,password) VALUES ('${req.body.name}','${req.body.first_name}','${req.body.email}','${hash}')`;
+          User({
+            name:req.body.name,
+            first_name:req.body.first_name,
+            email:req.body.email,
+            password:hash,
+          }).save()
+          .then((value)=>{
+            
+            if (value) {
+              const token = setToken(
+                  req.body.name,
+                  req.body.first_name,
+                  req.body.email,
+                  req.body.hash,
+                  false
+              );
 
-          db.query(query, function (err, result) {
+              res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
 
-              if (err) throw err;
-              else{
-                  // Data inserted inside the bdd
-                  console.log(result);
-                  // Token has been generated
-                  const token = setToken(
-                      req.body.name,
-                      req.body.first_name,
-                      req.body.email,
-                      req.body.hash,
-                      false
-                  );
+              res.send("token has been created")              
+              
+            }else{
+              console.error("error creating the user");
+            }
 
-                  res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
-
-                  res.send("token has been created")
-              }
-
-          });
-
+          })
+          .catch(err=>{
+            console.log(err);
+          })
       }
     });
 
@@ -145,7 +151,6 @@ router.get('/getband', function (req, res) {
   db.query(query,(err,response)=>{
     if (err) throw err; 
     else {
-      console.log(response);
       res.send(response);
     }
   })
