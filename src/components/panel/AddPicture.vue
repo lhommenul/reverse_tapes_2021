@@ -6,9 +6,11 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
+            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
         }
     },
     methods: {
@@ -20,6 +22,7 @@ export default {
             })
         },
         generateInput(){
+            let picture_info;
             const container = document.querySelector('.container_img');
                 const list_element = document.createElement('li');
                     const input = document.createElement('input');
@@ -31,8 +34,37 @@ export default {
                 button.type = "button"
                 button.textContent = "delete"
 
+                // Events
+                input.addEventListener('change',()=>{
+                    const formData = new FormData();
+                    formData.append("image", input.files[0]);
+
+                    axios.post(this.server_address+'/admin/addpicture', formData, {
+                        headers: {
+                        'Content-Type': 'multipart/form-data'
+                        }
+                    })             
+                    .then(data=>{
+                        picture_info=data.data;
+                    })  
+                    .catch(err=>{
+                        console.error(err);
+                    })    
+                    
+                })
+
                 button.addEventListener('click',()=>{
-                    list_element.remove()
+                    if (picture_info) {
+                        axios.post(this.server_address+'/admin/deletepicture', picture_info)             
+                        .then(data=>{
+                            console.log(data.data);
+                        })  
+                        .catch(err=>{
+                            console.error(err);
+                        })    
+    
+                        list_element.remove()
+                    }
                 })
             })();
             list_element.appendChild(input)

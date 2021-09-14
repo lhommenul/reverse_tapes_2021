@@ -14,7 +14,8 @@
 
 <script>
 // @ is an alias to /src
-  import Card from '@/components/Card.vue'
+import Card from '@/components/Card.vue';
+import axios from 'axios';
 export default {
   name: 'Shop',
   components: {
@@ -22,6 +23,7 @@ export default {
   },
   data() {
     return {
+      server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
       cards:[
         {
           type:"T-shirt",
@@ -73,6 +75,20 @@ export default {
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         }
       ]
+    }
+  },
+  mounted() {
+    this.getProduct();
+  },
+  methods: {
+    getProduct(){
+      axios.post(this.server_address+"/admin/getproduct")
+      .then(data=>{
+        console.log(data.data);
+      })
+      .catch(err=>{
+        console.error(err);
+      })
     }
   },
 }

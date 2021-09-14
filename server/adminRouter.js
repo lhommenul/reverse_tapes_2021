@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('./db');
 const {minifyAndStore} = require('./utils');
 const {isAdmin} = require('./auth');
+const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -72,16 +73,12 @@ router.post('/adduser', async (req, res) =>{
     
 })
 
-router.post('/addpicture', (req, res) => {
+router.post('/addpicture', async (req, res) => {
         if (req.files) {
-            req.files.pictures.forEach(file => {
-                minifyAndStore(file.data)
-            });
+            res.status(200).send(await minifyAndStore(req.files.image.data));
         } else {
-            
+            res.sendStatus(400)
         }
-        res.sendStatus(200)
-    // const query = "CALL `picture`("+picture_path+","+file_name+")";
 })
 
 router.post('/addproduct', (req, res) => {
@@ -125,6 +122,28 @@ router.post('/addband', (req, res) => {
     }
 })
 
+// GET 
+
+router.post('/getproduct', (req, res) => {
+    if (true){
+    
+        const query = `SELECT * FROM product`;
+        
+        db.query(query, function (err, result) {
+            if (err) throw err;
+            else{
+                console.log("Product has been sended");
+                res
+                    .status(200)
+                    .send(result);
+            }
+        });
+
+    }else{
+        res.status(400).send({message:"error while getting product"})
+    }
+})
+
 // DELETE 
 
 router.post('/deleteproduct', (req, res) => {
@@ -144,6 +163,31 @@ router.post('/deleteproduct', (req, res) => {
 
     }else{
         res.status(400).send({message:"error while deleting data"})
+    }
+})
+
+router.post('/deletepicture',(req,res)=>{
+    console.log(req.body);
+    if (req.body.date_id) {
+        const query = `CALL delete_picture(${req.body.date_id})`
+        db.query(query, function (err, result) {
+            if (err) throw err;
+            else{
+                const path = req.body.picture_path+"/"+req.body.file_name;
+                fs.unlink(path,(err=>{
+                    if (err) {
+                        console.error(err);
+                        res.status(400).send();
+                    } else {                        
+                        console.log("Picture has been deleted has been deleted");
+                        res.status(200).send({message:"Picture has been deleted has been deleted"});
+                    }
+                }))
+            }
+        });
+
+    } else {
+        res.status(400).send()
     }
 })
 
