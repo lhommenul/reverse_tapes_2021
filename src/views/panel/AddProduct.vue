@@ -1,62 +1,81 @@
 <template>
     <div>
         <ul class="list_products">    
-            <li class="uk-card uk-card-default uk-card-body" v-for="(product) in list_products" :key="product.id">
+            <li class="uk-card uk-card-default uk-card-body" v-for="(product,index) in list_products" :key="product.id">
                 <h3 class="uk-card-title">{{product.name}}</h3>
                 <p>{{product.description}}</p>
+                {{index}}
                 <div>
                     <button class="uk-button uk-button-secondary">Modifier</button>
                     <button class="uk-button uk-button-danger" v-on:click="deleteProduct(product.id)">Supprimer</button>
                 </div>
             </li>
         </ul>
-        <form class="uk-search uk-search-default" v-on:submit="addProduct">
+        <form class="uk-search uk-search-default " v-on:submit="addProduct">
             <!-- Name
              -->
-            <label>
+            <label class="uk-align-center">
                 Name
                 <input class="uk-search-input" required type="text" v-model="form.name" name="name" placeholder="Nom du produit">
-            </label>
-            <!-- Type -->
-            <label>
-                Type
-                <input class="uk-search-input" required type="number" v-model="form.type" name="type" placeholder="type">
-            </label>
+            </label>            
             <!-- Description -->
-            <label>
+            <label class="uk-align-center">
                 Description
                 <textarea class="uk-search-input" name="description" v-model="form.description" placeholder="description">
 
                 </textarea>
-            </label>
-            <!-- Color -->
-            <label>
-                Color
-                <input class="uk-search-input" required type="text" v-model="form.color" name="color" placeholder="color">
-            </label>
-            <!-- Type -->
-            <label>
-                Size
-                <input class="uk-search-input" required type="number" v-model="form.size" name="size" placeholder="size">
-            </label>    
-            <!-- Come to get it -->
-            <label>
-                Come to get it
-                <input class="uk-checkbox" type="checkbox" name="come_to_get_it" v-model="form.come_to_get_it">
-            </label>    
-            <!-- Type -->
-            <label>
+            </label>  
+            <!-- Price -->
+            <label class="uk-align-center">
                 Prix HT
                 <input class="uk-search-input" required type="number" v-model="form.price_ht" name="price_ht" placeholder="Prix hors taxes">
             </label>    
-             <label>
+             <label class="uk-align-center">
                 Prix TTC
                 <input class="uk-search-input" required type="number" v-model="form.price_ttc" name="price_ttc" placeholder="Prix avec taxes">
-            </label>                              
-            <label>
+            </label>        
+             <!--  Quantité  -->
+            <label class="uk-align-center">
                 Quantité
                 <input class="uk-search-input" required type="number" v-model="form.quantity" name="quantity" placeholder="exemple : 50">
-            </label>          
+            </label>                               
+            <!-- Type -->
+            <label class="uk-align-center">
+                Type
+                <select class="uk-select" required v-on:change="setType">
+                    <option value="1">Dematérialisé</option>
+                    <option value="2">Vinyle</option>
+                    <option value="3">Cd</option>
+                    <option value="4">Chaussure</option>
+                    <option value="5">Haut</option>
+                    <option value="6">Bas</option>
+                </select>    
+            </label>
+            <div class="uk-align-center" v-if="(form.type >= 1) && (form.type <= 3)"> 
+                <label class="uk-align-center">
+                    BandCamp Url
+                    <input class="uk-search-input" type="text" v-model="form.bandcamp" name="bandcamp" placeholder="https://stuffedfoxes.bandcamp.com/album/no-vacancy">
+                </label>        
+            </div>
+            
+
+            <div class="uk-align-center" v-if="(form.type >= 2) && (form.type <= 6)">
+                <!-- Color -->
+                <label class="uk-align-center">
+                    Color
+                    <input class="uk-search-input" required type="text" v-model="form.color" name="color" placeholder="color">
+                </label>
+                <!-- Come to get it -->
+                <label class="uk-align-center">
+                    Come to get it
+                    <input class="uk-checkbox" type="checkbox" name="come_to_get_it" v-model="form.come_to_get_it">
+                </label>  
+                <!-- Size -->
+                <label v-if="(form.type >= 4) && (form.type <= 6)"> 
+                    Size
+                    <input class="uk-search-input" required type="number" v-model="form.size" name="size" placeholder="size">
+                </label>                    
+            </div>
             <AddPicture></AddPicture>
             <button class="uk-button uk-button-primary">Ajouter le produit</button>                                                                         
         </form>
@@ -109,6 +128,7 @@ export default {
             )
             .then(data=>{
                 this.list_products = data.data;
+                console.log(data.data);
             })
             .catch(err=>{
                 console.log(err);
@@ -127,6 +147,9 @@ export default {
             .catch(err=>{
                 console.log(err);
             })
+        },
+        setType(ev){
+            this.form.type = parseInt(ev.target.value)
         }
     },
 }
@@ -144,7 +167,9 @@ export default {
         box-shadow: 3px 3px 6px grey;
         place-self: center;
     }
-    
+    .uk-search-default{
+        width: auto;
+    }
 
 form{
     display: flex;

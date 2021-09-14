@@ -12,7 +12,19 @@ router.post('/test', (req, res) =>{
     res.send("ok")
 })
 
-// ADD
+// INSERT DATA INSIDE BDD
+
+router.post('/addprogrammation', async (req, res) =>{
+    if (req.body.first_name && req.body.name && req.body.email && req.body.password) {
+
+
+    }else{
+
+        console.error("no informations");
+
+    }
+    
+})
 
 router.post('/adduser', async (req, res) =>{
     if (req.body.first_name && req.body.name && req.body.email && req.body.password) {
@@ -71,7 +83,6 @@ router.post('/addpicture', (req, res) => {
         res.sendStatus(200)
     // const query = "CALL `picture`("+picture_path+","+file_name+")";
 })
-
 
 router.post('/addproduct', (req, res) => {
     if (req.body.name && req.body.description && req.body.color && req.body.type && req.body.size && typeof req.body.come_to_get_it === "boolean"  && req.body.price_ttc && req.body.price_ht && req.body.quantity){

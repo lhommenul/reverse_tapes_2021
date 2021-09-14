@@ -5,6 +5,7 @@
                 <li class="uk-parent"><router-link to="/panel/addproduct">Ajouter Produit</router-link></li>
                 <li class="uk-parent"><router-link to="/panel/addband">Ajouter Groupe</router-link></li>
                 <li class="uk-parent"><router-link to="/panel/adduser">Ajouter Utilisateur</router-link></li>
+                <li class="uk-parent"><router-link to="/panel/addprogrammation">Ajouter Programmation</router-link></li>
             </ul>
         </div>
     </nav>

@@ -71,6 +71,18 @@ const routes = [
         // when /user/:id/posts is matched
         path: 'addband',
         component: () => import(/* webpackChunkName: "about" */ '../views/panel/AddBand.vue')
+      },
+      {
+        // UserPosts will be rendered inside User's <router-view>
+        // when /user/:id/posts is matched
+        path: 'adduser',
+        component: () => import(/* webpackChunkName: "about" */ '../views/panel/AddUser.vue')
+      },
+      {
+        // UserPosts will be rendered inside User's <router-view>
+        // when /user/:id/posts is matched
+        path: 'addprogrammation',
+        component: () => import(/* webpackChunkName: "about" */ '../views/panel/AddProgrammation.vue')
       }
     ],
     // route level code-splitting
