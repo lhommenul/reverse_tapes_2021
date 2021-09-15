@@ -11,38 +11,38 @@
                 </div>
             </li>
         </ul>
-        <form class="uk-search uk-search-default " v-on:submit="addProduct">
+        <form class="uk-search uk-search-default form_data_product" v-on:submit="addProduct">
             <!-- Name
              -->
             <label class="uk-align-center">
                 Name
-                <input class="uk-search-input" required type="text" v-model="form.name" name="name" placeholder="Nom du produit">
+                <input class="uk-search-input" required type="text" name="name" placeholder="Nom du produit">
             </label>            
             <!-- Description -->
             <label class="uk-align-center">
                 Description
-                <textarea class="uk-search-input" name="description" v-model="form.description" placeholder="description">
+                <textarea class="uk-search-input" name="description" placeholder="description">
 
                 </textarea>
             </label>  
             <!-- Price -->
             <label class="uk-align-center">
                 Prix HT
-                <input class="uk-search-input" required type="number" v-model="form.price_ht" name="price_ht" placeholder="Prix hors taxes">
+                <input class="uk-search-input" required type="number" name="price_ht" placeholder="Prix hors taxes">
             </label>    
              <label class="uk-align-center">
                 Prix TTC
-                <input class="uk-search-input" required type="number" v-model="form.price_ttc" name="price_ttc" placeholder="Prix avec taxes">
+                <input class="uk-search-input" required type="number" name="price_ttc" placeholder="Prix avec taxes">
             </label>        
              <!--  Quantité  -->
             <label class="uk-align-center">
                 Quantité
-                <input class="uk-search-input" required type="number" v-model="form.quantity" name="quantity" placeholder="exemple : 50">
+                <input class="uk-search-input" required type="number" name="quantity" placeholder="exemple : 50">
             </label>                               
             <!-- Type -->
             <label class="uk-align-center">
                 Type
-                <select class="uk-select" required v-on:change="setType">
+                    <select class="uk-select" required v-on:change="setType">
                     <option value="1">Dematérialisé</option>
                     <option value="2">Vinyle</option>
                     <option value="3">Cd</option>
@@ -51,32 +51,40 @@
                     <option value="6">Bas</option>
                 </select>    
             </label>
-            <div class="uk-align-center" v-if="(form.type >= 1) && (form.type <= 3)"> 
+            <div class="uk-align-center" v-if="(type_selected >= 1) && (type_selected <= 3)"> 
                 <label class="uk-align-center">
                     BandCamp Url
-                    <input class="uk-search-input" type="text" v-model="form.bandcamp" name="bandcamp" placeholder="https://stuffedfoxes.bandcamp.com/album/no-vacancy">
+                    <input class="uk-search-input" type="text" name="bandcamp" placeholder="https://stuffedfoxes.bandcamp.com/album/no-vacancy">
                 </label>        
             </div>
             
 
-            <div class="uk-align-center" v-if="(form.type >= 2) && (form.type <= 6)">
+            <div class="uk-align-center" v-if="(type_selected >= 2) && (type_selected <= 6)">
                 <!-- Color -->
                 <label class="uk-align-center">
                     Color
-                    <input class="uk-search-input" required type="text" v-model="form.color" name="color" placeholder="color">
+                    <input class="uk-search-input" required type="text" name="color" placeholder="color">
                 </label>
                 <!-- Come to get it -->
                 <label class="uk-align-center">
                     Come to get it
-                    <input class="uk-checkbox" type="checkbox" name="come_to_get_it" v-model="form.come_to_get_it">
+                    <input class="uk-checkbox" type="checkbox" name="come_to_get_it">
                 </label>  
                 <!-- Size -->
-                <label v-if="(form.type >= 4) && (form.type <= 6)"> 
+                <label v-if="(type_selected >= 4) && (type_selected <= 6)"> 
                     Size
-                    <input class="uk-search-input" required type="number" v-model="form.size" name="size" placeholder="size">
+                    <input class="uk-search-input" required type="number" name="size" placeholder="size">
                 </label>                    
             </div>
-            <AddPicture></AddPicture>
+            <div class="container_thumbnail">
+                <AddPicture
+                    input_name="thumbnail"
+                    btn_name="AJOUTER UNE THUMBNAIL"
+                ></AddPicture>
+            </div>            
+            <div class="container_pictures">
+                <AddPicture></AddPicture>
+            </div>
             <button class="uk-button uk-button-primary">Ajouter le produit</button>                                                                         
         </form>
     </div>
@@ -88,16 +96,7 @@ import AddPicture from '@/components/panel/AddPicture'
 export default {
     data() {
         return {
-            form:{
-                type:undefined,
-                description:undefined,
-                color:undefined,
-                size:undefined,
-                come_to_get_it:false,
-                price_ht:undefined,
-                price_ttc:undefined,
-                quantity:undefined,
-            },
+            type_selected:undefined,
             list_products:[],
             server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
         }
@@ -110,10 +109,20 @@ export default {
     },
     methods: {
         addProduct(ev){
+            console.log("requested");
+
             ev.preventDefault();
+
+            const form_product = document.querySelector('.form_data_product');
+
+            const formData = new FormData(form_product);
+
             axios.post(
-                this.server_address,
-                this.form
+                this.server_address+"/admin/addproduct",
+                formData,
+                {
+                      headers: { "Content-Type": "multipart/form-data" },
+                }
             )
             .then(data=>{
                console.log(data.data);
@@ -121,35 +130,22 @@ export default {
             .catch(err=>{
                 console.log(err);
             })
+
         },
         getProducts(){
             axios.get(
                 this.server_address+"/getproduct",
             )
             .then(data=>{
-                this.list_products = data.data;
                 console.log(data.data);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        },
-        // DELETE
-        deleteProduct(product_id){
-            axios.post(
-                this.server_address+"/admin/deleteproduct",
-                {id:product_id}
-            )
-            .then(data=>{
-               console.log(data.data);
-               this.getProducts()
+                this.list_products = data.data;
             })
             .catch(err=>{
                 console.log(err);
             })
         },
         setType(ev){
-            this.form.type = parseInt(ev.target.value)
+            this.type_selected = parseInt(ev.target.value)
         }
     },
 }

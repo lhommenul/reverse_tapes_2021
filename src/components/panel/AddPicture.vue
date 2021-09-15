@@ -2,7 +2,7 @@
     <ul class="container_img">
 
     </ul>
-    <button class="uk-button uk-button-secondary" v-on:click="generateInput()" type="button">Ajouter une photo</button>
+    <button class="uk-button uk-button-secondary" v-on:click="generateInput()" type="button">{{btn_name??"Ajouter une photo"}}</button>
 </template>
 
 <script>
@@ -11,6 +11,10 @@ export default {
         return {
             server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
         }
+    },
+    props:{
+        input_name:String,
+        btn_name:String,
     },
     methods: {
         deleteInputPicture(delete_index){
@@ -28,6 +32,8 @@ export default {
 
             (()=>{
                 input.type="file"
+                input.name = this.input_name??"picture"
+
                 button.className= "uk-button uk-button-danger"
                 button.type = "button"
                 button.textContent = "delete"

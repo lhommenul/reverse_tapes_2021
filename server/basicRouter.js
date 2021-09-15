@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router();
 const db = require('./db');
 const bcrypt = require('bcrypt');
+const Product = require('./schema/Product')
+const Picture = require('./schema/Picture')
 const User = require('./schema/User')
 const {setToken,checkToken} = require("./auth.js");
 const saltRounds = 10;
@@ -136,15 +138,44 @@ router.post('/createaccount',function (req, res) {
 })
 
 router.get('/getproduct', function (req, res) {
-  const query = "SELECT * FROM product"
-  db.query(query,(err,response)=>{
-    if (err) throw err; 
-    else {
-      console.log(response);
-      res.send(response);
+  Product.find((err,response)=>{
+    if (err) {
+
+      throw err;
+
+    } else {
+
+      if (err) throw err; 
+      else {
+        console.log(response);
+        res.send(response);
+
+      }
+
     }
   })
 })
+
+router.get('/getpicture', function (req, res) {
+  console.log(req.query.id);
+  Picture.findById({_id:req.query.id},(err,response)=>{
+      if (err) {
+  
+        throw err;
+  
+      } else {
+  
+        if (err) throw err; 
+        else {
+          console.log(response);
+          res.send(response);
+  
+        }
+  
+      }
+  })
+})
+
 
 router.get('/getband', function (req, res) {
   const query = "SELECT * FROM band"

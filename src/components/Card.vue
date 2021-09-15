@@ -1,8 +1,8 @@
 <template>
     <li :style="{height:height,width:width}">
-        <img class="img_card" :src="`https://picsum.photos/200/200`" alt="image">
-        <button class="btn_type">{{data.type}}</button>
-        <div class="card_window">
+        <img class="img_card" :src="server_address+data.thumbnail" alt="image">
+        <button class="btn_type" >{{showType()}}</button>
+        <div class="card_window" v-on:click="goTo">
             <h1>{{data.title}}</h1>
             <p>{{data.description}}</p>
         </div>
@@ -11,10 +11,33 @@
 
 <script>
 export default {
+    data() {
+        return {
+            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
+        }
+    },
     props:{
         height : String,
         width : String,
         data : Object,
+    },
+    mounted(){   
+        // this.getPicture(this.data.thumbnail)
+    },
+    methods: {
+        showType(){
+            switch (this.data.type) {
+                case 1:
+                return "CD" 
+                    
+            
+                default:
+                    return "Undefined"
+            }
+        },
+        goTo(){
+            this.$router.push('/product?id='+this.data._id)
+        }
     },
 }
 </script>

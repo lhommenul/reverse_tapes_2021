@@ -3,16 +3,12 @@ const router = express.Router();
 const db = require('./db');
 const {minifyAndStore} = require('./utils');
 const {isAdmin} = require('./auth');
-const Picture = require('./schema/Picture')
+const Product = require('./schema/Product')
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 // router.use(isAdmin)
-
-router.post('/test', (req, res) =>{
-    res.send("ok")
-})
 
 // INSERT
 
@@ -65,6 +61,7 @@ router.post('/test', (req, res) =>{
 
 
 router.post('/addpicture', async (req, res) => {
+    console.log(req.files);
         if (req.files) {
 
             if (!req.files.image.length) { // one image
@@ -100,22 +97,85 @@ router.post('/addpicture', async (req, res) => {
 })
 
 router.post('/addproduct', (req, res) => {
-    if (req.body.name && req.body.description && req.body.color && req.body.type && req.body.size && typeof req.body.come_to_get_it === "boolean"  && req.body.price_ttc && req.body.price_ht && req.body.quantity){
-        console.log("here");
-        const query = `CALL add_product(${req.body.type},"${req.body.name}","${req.body.description}","${req.body.color}",${req.body.size},${req.body.come_to_get_it},${req.body.price_ttc},${req.body.price_ht},${req.body.quantity});`;
-        
-        db.query(query, function (err, result) {
-            if (err) throw err;
-            else{
-                console.log("Product hhas been added");
-                res
-                    .status(200)
-                    .send({message:"token has been created"});
-            }
-        });
+    if (req.files.thumbnail && typeof req.files.thumbnail === "object") { // check if thhere is a thumbnail
+
+        minifyAndStore(req.files.thumbnail.data)
+        .then(data_thumbnail=>{ // the thumbnail has been saved and stored inside the bdd 
+            pictures(["/static/pictures/"+data_thumbnail.file_name])
+        })
+        .catch(err=>{
+            console.log(err);
+        })
 
     }else{
-        res.status(400).send({message:"error while checking data in the form"})
+        console.error("erreur");
+        res.status(400).send({message:"error withh thhe thumbnail"});
+    }
+
+
+    const pictures = async (data_thumbnail)=>{
+        if (req.files) { // check if there is files
+
+            if (!req.files.picture.length) { // if there is only one image
+                
+                addProduct({thumbnail:data_thumbnail,pictures:"/static/pictures/"+(await minifyAndStore(req.files.picture.data)).file_name})
+    
+            }else{ // if there is multiple images
+    
+                (async ()=>{
+    
+                    try {
+                        let list_id_picture = []
+                        for (let index = 0; index < req.files.picture.length; index++) {
+    
+                            const picture = req.files.picture[index];
+                            list_id_picture.push("/static/pictures/"+(await minifyAndStore(picture.data)).file_name)
+    
+                        }
+                        
+                        addProduct({thumbnail:data_thumbnail,pictures:list_id_picture})
+    
+                    } catch (error) {   
+    
+                        res.status(400).send({message:"error while adding pictures"});
+    
+                    }
+    
+                })();
+            }
+        } else {
+            res.sendStatus(400)
+        }        
+    }
+
+    const addProduct = ({thumbnail,pictures})=>{
+        if (req.body.name && req.body.description && req.body.color && req.body.type && req.body.size  && req.body.price_ttc && req.body.price_ht && req.body.quantity){
+            Product({
+                name: req.body.name,
+                type: req.body.type,
+                description: req.body.description,
+                color:req.body.color,
+                thumbnail:thumbnail,
+                pictures:pictures,
+                size:req.body.size,
+                bandcamp:req.body.bandcamp,
+                come_to_get_it:req.body.come_to_get_it,
+                price_ttc:req.body.price_ttc,
+                price_ht:req.body.price_ht,
+                quantity:req.body.quantity
+            })
+            .save()
+            .then(()=>{ // Product has been added
+                res.status(200).send({message:"token has been created"});            
+            })
+            .catch(err=>{
+                console.log(err);
+                res.status(400).send({message:"error while checking data in the form"})
+            })
+    
+        }else{
+            res.status(400).send({message:"error while checking data in the form"})
+        }
     }
 })
 
@@ -161,7 +221,6 @@ router.post('/addband', (req, res) => {
 })
 
 router.post('/addprogrammation', (req, res) => {
-    console.log(req.body);
     
     if (req.body.name && req.body.description && req.body.location && req.body.event_start && req.body.envent_end && req.body.hour_start && req.body.hour_end){
         console.log("all data");
@@ -176,28 +235,6 @@ router.post('/addprogrammation', (req, res) => {
         // });
     }else{
         res.status(400).send({message:"error while checking data in the form"})
-    }
-})
-
-// GET 
-
-router.post('/getproduct', (req, res) => {
-    if (true){
-    
-        const query = `SELECT * FROM product`;
-        
-        db.query(query, function (err, result) {
-            if (err) throw err;
-            else{
-                console.log("Product has been sended");
-                res
-                    .status(200)
-                    .send(result);
-            }
-        });
-
-    }else{
-        res.status(400).send({message:"error while getting product"})
     }
 })
 

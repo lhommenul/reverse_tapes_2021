@@ -3,10 +3,10 @@
     <h1 class="title">Shop</h1>
     <ul class="list_cards">
       <Card
-        v-for="(card, index) in cards" :key="index"
+        v-for="(product, index) in products" :key="index"
         :height="'49vw'"
         :width="'49vw'"
-        :data="card"
+        :data="product"
       ></Card>
     </ul>
   </div>
@@ -24,57 +24,7 @@ export default {
   data() {
     return {
       server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
-      cards:[
-        {
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          img:"",
-          to:"/article/02023323",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        }
-      ]
+      products:[]
     }
   },
   mounted() {
@@ -82,9 +32,9 @@ export default {
   },
   methods: {
     getProduct(){
-      axios.post(this.server_address+"/admin/getproduct")
+      axios.get(this.server_address+"/getproduct")
       .then(data=>{
-        console.log(data.data);
+        this.products = data.data;
       })
       .catch(err=>{
         console.error(err);
