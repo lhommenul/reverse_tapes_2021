@@ -18,7 +18,7 @@
       </div>
     
       <!-- Form ajout au panier -->
-      <form class="container_form">
+      <form class="container_form" v-on:submit="addToBasket">
 
         <h2 class="uk-legend title">{{setType()}}</h2>
 
@@ -107,6 +107,17 @@ export default {
       } else {
        return `${price}€`; 
       }
+    },
+    addToBasket(ev){
+      ev.preventDefault();
+      // console.log(this.product_data.name);
+      this.$store.commit("addProductToBasket",{
+        id:this.product_data._id,
+        name:this.product_data.name,
+        quantity:this.product_data.quantity,
+        thumbnail:this.product_data.thumbnail[0],
+        size:this.product_data.size
+      })
     }
   }
 }

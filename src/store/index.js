@@ -17,17 +17,12 @@ export default createStore({
       //   thumbnail:String,
       //   size:String
       // }
-      // check product 
-      if (product) {
+      
+      if (product) { // check product 
         state.basket.products.push(
-          { 
-            id:Number,
-            name:String,
-            quantity:Number,
-            thumbnail:String,
-            size:String
-          }
+          product
         )
+        console.log("product added to the basket");
       } else {
         console.error("error while adding the product to the basket");
       }

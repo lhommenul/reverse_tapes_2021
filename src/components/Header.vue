@@ -2,7 +2,7 @@
   <header class="nav_header">
       <img class="logo_header" src="@/assets/logo.png" alt="reverse tapes logo">
       <nav class="nav_container" >
-          <router-link to="/basket">Basket</router-link>
+          <div class="f_row"><router-link class="link_to_basket f_row" to="/basket">Basket <span class="tip f_row">{{$store.state.basket.products.length}}</span></router-link></div>
           <button class="btn_nav" v-on:click="setModalState()"><img class="icon_menu_nav" src="@/assets/menu_white_icon.svg" alt="menu icon"></button>
           <ul class="list_elements" :class="{ open_modal: modal.state,close_modal: modal.state === false }">
               <button class="button_close_modal" v-on:click="setModalState()">close</button>
@@ -65,6 +65,26 @@ export default {
             /* justify-content: center; */
             align-items: center;
         }
+            .link_to_basket{
+                background-color: var(--beige);
+                text-align: center;
+                align-items: center;
+                border-style: none;
+                color: var(--back_grey);
+            }
+                .tip{
+                    transform: translate(50%,-50%);
+                    font-size: 1.3rem;
+                    height: 1em;
+                    width: 1em;
+                    text-align: center;
+                    border-radius: 50%;
+                    background-color: rgb(212, 0, 0);
+                    color: white;
+                    padding: 0.5rem;
+                    justify-content: center;
+                    align-items: center;
+                }
             .open_modal{
                 display: grid;
             }

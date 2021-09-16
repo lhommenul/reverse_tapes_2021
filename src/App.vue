@@ -36,4 +36,12 @@ export default {
   .overflow_hidden{
       overflow: hidden;
   }
+  .f_row{
+    display: flex;
+    flex-direction: row;
+  }
+  .f_col{
+    display: flex;
+    flex-direction: column;
+  }
 </style>
