@@ -29,12 +29,16 @@
             </div>
         </div>
         <button>Payer</button>
+        <div id="payement_container">
+
+        </div>
     </section>
 </template>
 
 
 <script>
 // import axios from 'axios'
+import { loadScript } from "@paypal/paypal-js";
 export default {
     data() {
         return {
@@ -42,19 +46,23 @@ export default {
         }
     },
     mounted(){
-        // this.getUserInfo()
+        this.getUserInfo()
     },
     methods:{
 
-        // getUserInfo(){
-        //     axios.post(this.$store.state.server_address+"/admin/getinfo")
-        //     .then(data=>{
-        //         console.log(data.data);
-        //     })
-        //     .catch(err=>{
-        //         console.error(err);
-        //     })
-        // }
+        getUserInfo(){
+        
+        },
+        setUpdatePayment(){
+            loadScript({ "client-id": "test" })
+            .then((paypal) => {
+                paypal.Buttons().render("#payement_container");
+            })
+            .catch((err) => {
+                console.error("failed to load the PayPal JS SDK script", err);
+            });
+        }
+
     }
 }
 </script>

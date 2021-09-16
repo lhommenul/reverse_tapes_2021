@@ -7,7 +7,6 @@ const Product = require('./schema/Product')
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const axios = require('axios'); 
 
 // router.use(isAdmin)
 
@@ -330,75 +329,12 @@ router.post('/deleteband', (req, res) => {
 })
 
 // GET
-router.post('/getinfo',(req, res) => {
+router.post('/getuser',(req, res) => {
     console.log(req.cookies);
     res.status(200).send({
         id:"dsqdsq",
         name:'dsq'
     })
-})
-
-
-axios({
-    url:"https://api-m.sandbox.paypal.com/v1/payments/payouts",
-    method:"POST",
-    headers:{
-        "Content-Type": "application/json",
-        "access_token": "sandbox$7gwbt436qtcgmsbc$ce2305e04f93e1e923e02271b387ef8c" 
-    },
-    body:{
-        "sender_batch_header": {
-          "sender_batch_id": "Payouts_2018_100007",
-          "email_subject": "You have a payout!",
-          "email_message": "You have received a payout! Thanks for using our service!"
-        },
-        "items": [
-          {
-            "recipient_type": "EMAIL",
-            "amount": {
-              "value": "9.87",
-              "currency": "USD"
-            },
-            "note": "Thanks for your patronage!",
-            "sender_item_id": "201403140001",
-            "receiver": "receiver@example.com",
-            "alternate_notification_method": {
-              "phone": {
-                "country_code": "91",
-                "national_number": "9999988888"
-              }
-            },
-            "notification_language": "fr-FR"
-          },
-          {
-            "recipient_type": "PHONE",
-            "amount": {
-              "value": "112.34",
-              "currency": "USD"
-            },
-            "note": "Thanks for your support!",
-            "sender_item_id": "201403140002",
-            "receiver": "91-734-234-1234"
-          },
-          {
-            "recipient_type": "PAYPAL_ID",
-            "amount": {
-              "value": "5.32",
-              "currency": "USD"
-            },
-            "note": "Thanks for your patronage!",
-            "sender_item_id": "201403140003",
-            "receiver": "G83JXTJ5EHCQ2"
-          }
-        ]
-      }
-})
-// axios.post("https://api-m.sandbox.paypal.com/v1/payments/payouts",)
-.then(data=>{
-    console.log(data);
-})
-.catch(err=>{
-console.error(err);
 })
 
 module.exports = router;
