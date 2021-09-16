@@ -2,6 +2,7 @@
   <header class="nav_header">
       <img class="logo_header" src="@/assets/logo.png" alt="reverse tapes logo">
       <nav class="nav_container" >
+          <router-link to="/basket">Basket</router-link>
           <button class="btn_nav" v-on:click="setModalState()"><img class="icon_menu_nav" src="@/assets/menu_white_icon.svg" alt="menu icon"></button>
           <ul class="list_elements" :class="{ open_modal: modal.state,close_modal: modal.state === false }">
               <button class="button_close_modal" v-on:click="setModalState()">close</button>
