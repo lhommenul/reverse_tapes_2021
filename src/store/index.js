@@ -6,7 +6,8 @@ export default createStore({
       products:[ //  list of products => empty by default 
 
       ]
-    }
+    },
+    server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
   },
   mutations: {
     addProductToBasket (state,product) {
@@ -27,8 +28,9 @@ export default createStore({
         console.error("error while adding the product to the basket");
       }
     },
-    removeProductFromBasket (state){
-      console.log(state);
+    removeProductFromBasket (state,id){
+      // console.log(state,id);
+      state.basket.products = state.basket.products.filter(product=>product.id!=id);
     }
   },
   actions: {
