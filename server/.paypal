@@ -1,0 +1,42 @@
+{
+  "name": "Override Agreement",
+  "description": "PayPal payment agreement that overrides merchant preferences and shipping fee and tax information.",
+  "start_date": "2017-12-22T09:13:49Z",
+  "payer": {
+    "payment_method": "paypal",
+    "payer_info": {
+      "email": "payer@example.com"
+    }
+  },
+  "plan": {
+    "id": "P-1WJ68935LL406420PUTENA2I"
+  },
+  "shipping_address": {
+    "line1": "Hotel Staybridge",
+    "line2": "Crooke Street",
+    "city": "San Jose",
+    "state": "CA",
+    "postal_code": "95112",
+    "country_code": "US"
+  },
+  "override_merchant_preferences": {
+    "setup_fee": {
+      "value": "3",
+      "currency": "GBP"
+    },
+    "return_url": "https://example.com/",
+    "cancel_url": "https://example.com/cancel",
+    "auto_bill_amount": "YES",
+    "initial_fail_amount_action": "CONTINUE",
+    "max_fail_attempts": "11"
+  },
+  "override_charge_models": [
+    {
+      "charge_id": "CHM-8373958130821962WUTENA2Q",
+      "amount": {
+        "value": "1",
+        "currency": "GBP"
+      }
+    }
+  ]
+}

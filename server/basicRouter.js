@@ -138,22 +138,38 @@ router.post('/createaccount',function (req, res) {
 })
 
 router.get('/getproduct', function (req, res) {
-  Product.find((err,response)=>{
-    if (err) {
-
-      throw err;
-
-    } else {
-
-      if (err) throw err; 
-      else {
-        console.log(response);
-        res.send(response);
-
+  if (req.query.id) {
+    Product.findById(req.query.id,(err,response)=>{
+      if (err) {
+        throw err;
+      } else {
+        if (err) throw err; 
+        else {
+          console.log(response);
+          res.send(response);
+  
+        }
+  
       }
-
-    }
-  })
+    })
+  }else{
+    Product.find((err,response)=>{
+      if (err) {
+  
+        throw err;
+  
+      } else {
+  
+        if (err) throw err; 
+        else {
+          console.log(response);
+          res.send(response);
+  
+        }
+  
+      }
+    })
+  }
 })
 
 router.get('/getpicture', function (req, res) {
