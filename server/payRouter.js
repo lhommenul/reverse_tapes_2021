@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-var path = require('path');
-var paypal = require('paypal-rest-sdk');
+const paypal = require('paypal-rest-sdk'); // need to be deleted
+const axios = require('axios');
 
 // configure paypal with the credentials you got when you created your paypal app
 paypal.configure({
@@ -12,8 +12,35 @@ paypal.configure({
 
 // start payment process 
 router.get('/buy' , ( req , res ) => {
+
+    const token = "A21AALzGHxxq4gJFm6W7L54TrJTTJWUzQRSkP3jfeyrWjG4XUxAPjV6UNDPu9ukozT4giySBe6jAvtixMivCHINUJXjEtfVig"
 	// create payment object 
-    
+    let config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+      }
+      
+      let data = {
+        "intent": "CAPTURE",
+        "purchase_units": [
+          {
+            "amount": {
+              "currency_code": "USD",
+              "value": "100.00"
+            }
+          }
+        ]
+      }
+
+    // A21AAK4pB4wvjcD0X1X6a44sDl_mpknko8pwbI4aggMsZI3_ACCliLbpvgVRHk-yvr2BSGKrlmFf5Zl2Wfjtsdqm8Gx4AkltQ
+    axios.post("https://api-m.sandbox.paypal.com/v2/checkout/orders",data, config)
+    .then(data=>{
+        console.log(data);
+    })
+    .catch(err=>{
+        console.error(err);
+    })
 }); 
 
 
