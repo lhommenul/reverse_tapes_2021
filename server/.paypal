@@ -1,42 +1,8 @@
 {
-  "name": "Override Agreement",
-  "description": "PayPal payment agreement that overrides merchant preferences and shipping fee and tax information.",
-  "start_date": "2017-12-22T09:13:49Z",
-  "payer": {
-    "payment_method": "paypal",
-    "payer_info": {
-      "email": "payer@example.com"
-    }
-  },
-  "plan": {
-    "id": "P-1WJ68935LL406420PUTENA2I"
-  },
-  "shipping_address": {
-    "line1": "Hotel Staybridge",
-    "line2": "Crooke Street",
-    "city": "San Jose",
-    "state": "CA",
-    "postal_code": "95112",
-    "country_code": "US"
-  },
-  "override_merchant_preferences": {
-    "setup_fee": {
-      "value": "3",
-      "currency": "GBP"
-    },
-    "return_url": "https://example.com/",
-    "cancel_url": "https://example.com/cancel",
-    "auto_bill_amount": "YES",
-    "initial_fail_amount_action": "CONTINUE",
-    "max_fail_attempts": "11"
-  },
-  "override_charge_models": [
-    {
-      "charge_id": "CHM-8373958130821962WUTENA2Q",
-      "amount": {
-        "value": "1",
-        "currency": "GBP"
-      }
-    }
-  ]
+  "scope": "https://uri.paypal.com/services/invoicing https://uri.paypal.com/services/vault/payment-tokens/read https://uri.paypal.com/services/disputes/read-buyer https://uri.paypal.com/services/payments/realtimepayment https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/payment/authcapture openid https://uri.paypal.com/services/disputes/read-seller Braintree:Vault https://uri.paypal.com/services/payments/refund https://api.paypal.com/v1/vault/credit-card https://api.paypal.com/v1/payments/.* https://uri.paypal.com/payments/payouts https://uri.paypal.com/services/vault/payment-tokens/readwrite https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/applications/webhooks",
+  "access_token": "A21AAK4pB4wvjcD0X1X6a44sDl_mpknko8pwbI4aggMsZI3_ACCliLbpvgVRHk-yvr2BSGKrlmFf5Zl2Wfjtsdqm8Gx4AkltQ",
+  "token_type": "Bearer",
+  "app_id": "APP-80W284485P519543T",
+  "expires_in": 32400,
+  "nonce": "2021-09-16T16:01:02ZdDojUfKwh3zm6nnyIyyo9o2XASxGlDKM3j-pP2WJr_E"
 }

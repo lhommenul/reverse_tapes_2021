@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const adminRouter = require("./adminRouter");
 const basicRouter = require("./basicRouter");
+const payRouter = require("./payRouter");
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
@@ -24,7 +25,9 @@ app.use(fileUpload({
 }));
 
 //add other middleware
-app.use(cors());
+
+
+app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
 
 app.use(cookieParser());
 
@@ -33,6 +36,8 @@ app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/",basicRouter);
+
+app.use("/pay",payRouter);
 
 app.use("/admin",adminRouter);
 

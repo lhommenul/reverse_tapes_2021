@@ -15,49 +15,47 @@ router.get('/', function (req, res) {
 })
 
 router.post('/connection',function (req, res) {
-
+  console.log(req.body.email ,req.body.password);
   if (req.body.email && req.body.password) { // check in the bdd if the user exist
       
-      const query = `SELECT * FROM user WHERE email='${req.body.email}';`
+      User.findOne({email:req.body.email})
+      .then(response=>{
+        bcrypt.compare(req.body.password, response.password, function(err, result) {
 
-      db.query(query,(err,response)=>{
-          if (err) {
+          if (err) { // wrong password 
               throw err;
           } else {
+              if (result) {  // if the password are the same
 
-              bcrypt.compare(req.body.password, response[0].password, function(err, result) {
+                  const token = setToken(
+                      response.name,
+                      response.first_name,
+                      response.email,
+                      response.password,
+                      false
+                  );
 
-                  if (err) { // wrong password 
-                      throw err;
-                  } else {
-                      if (result) {  // if the password are the same
+                  res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
 
-                          const token = setToken(
-                              response[0].name,
-                              response[0].first_name,
-                              response[0].email,
-                              response[0].password,
-                              false
-                          );
+                  res.send("token has been created")
 
-                          res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
+                  
 
-                          res.send("token has been created")
+              } else {
 
-                      } else {
+                  console.error("password doesnt match");
 
-                          console.error("password doesnt match");
-
-                          res.send({
-                              message:"password doesnt match"
-                          })
-                      }
-                  }
-
-              });
+                  res.send({
+                      message:"password doesnt match"
+                  })
+              }
           }
-      })
 
+      });
+      })
+      .catch(err=>{
+        console.error(err);
+      })
   }else{
     
     console.error("not the informations requested");
@@ -91,9 +89,6 @@ router.post('/createaccount',function (req, res) {
           throw err;
       } else {
 
-        console.log(req.body);
-          console.log("Hash has been generated");
-
           User({
             name:req.body.name,
             first_name:req.body.first_name,
@@ -101,22 +96,22 @@ router.post('/createaccount',function (req, res) {
             password:hash,
           }).save()
           .then((value)=>{
-            
             if (value) {
               const token = setToken(
                   req.body.name,
                   req.body.first_name,
                   req.body.email,
-                  req.body.hash,
+                  hash,
                   false
               );
-
-              res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
-
-              res.send("token has been created")              
+              // res.header("Access-Control-Allow-Origin", "*");
+              res.cookie("rv_token",token, { maxAge: 900000, httpOnly: false })
               
+              res.send();
+            
             }else{
               console.error("error creating the user");
+              res.status(400).send({message:"error no data returned from the bdd"})
             }
 
           })
@@ -145,7 +140,6 @@ router.get('/getproduct', function (req, res) {
       } else {
         if (err) throw err; 
         else {
-          console.log(response);
           res.send(response);
   
         }
@@ -162,7 +156,7 @@ router.get('/getproduct', function (req, res) {
   
         if (err) throw err; 
         else {
-          console.log(response);
+
           res.send(response);
   
         }

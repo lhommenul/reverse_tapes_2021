@@ -8,7 +8,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// router.use(isAdmin)
+router.use(isAdmin)
 
 // INSERT
 
@@ -336,5 +336,7 @@ router.post('/getuser',(req, res) => {
         name:'dsq'
     })
 })
+
+
 
 module.exports = router;

@@ -20,6 +20,9 @@ export default {
   components: {
     Card
   },
+  mounted(){
+    console.log(document.cookie);
+  },
   data() {
     return {
       cards:[

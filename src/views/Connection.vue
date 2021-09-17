@@ -31,15 +31,15 @@ export default {
         login(ev){
             this.response = {};
             ev.preventDefault();
+            const formData = new FormData(document.querySelector('.form_connection'))
             axios({
                 method:"POST",
                 url:this.server_address+"/connection",
-                params:{
-
-                }
+                data:formData
             })
             .then(data=>{
                 this.response = data.data;
+                this.$router.push('/?message=connected')
             })
             .catch(err=>{
                 console.log(err);

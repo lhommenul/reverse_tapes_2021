@@ -50,10 +50,11 @@ export default {
 
             axios.post(
                 this.server_address+"/createaccount",
-                this.form
+                this.form,
             )
             .then(data=>{
                 this.response = data.data;
+                console.log(document.cookie);
                 this.$router.push('/?message="Connected"')
             })
             .catch(err=>{
