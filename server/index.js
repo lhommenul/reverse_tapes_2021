@@ -26,7 +26,6 @@ app.use(fileUpload({
 
 //add other middleware
 
-
 app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
 
 app.use(cookieParser());

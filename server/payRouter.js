@@ -7,8 +7,15 @@ console.log( `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`);
 // start payment process 
 router.post('/create-checkout-session', async (req, res) => {
   // check the client basket 
+  checkBasketProduct(req.body);
 
+  function checkBasketProduct(params) {
+    
+  }
 
+  function normalizeProducts(list_products) {
+    
+  }
 
   // create thhe session for thhe client  
   const session = await stripe.checkout.sessions.create({

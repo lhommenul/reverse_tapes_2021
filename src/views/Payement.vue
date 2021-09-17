@@ -20,15 +20,9 @@
             <div></div>
         </div>
         <!-- ORDER INFORMATIONS -->
-        <form method="POST" :action="$store.state.server_address+'/pay/create-checkout-session'">
-            <div>
+        <form method="POST" v-on:submit="payementRequest" :action="$store.state.server_address+'/pay/create-checkout-session'">
             <h2>Order Informations</h2>
-            </div>
-
-            <button v-on:click="setUpdatePayment">Payer</button>
-            <div id="payement_container">
-
-            </div>
+            <button >Payer</button>
         </form>
     </section>
 </template>
@@ -36,7 +30,6 @@
 
 <script>
 import axios from 'axios'
-// import { loadScript } from "@paypal/paypal-js";
 export default {
     data() {
         return {
@@ -58,6 +51,19 @@ export default {
                 console.error(err);
             })
         },
+        payementRequest(ev){
+            ev.preventDefault();
+            
+            axios.post(this.$store.state.server_address+'/pay/create-checkout-session',{
+
+            })
+            .then(data=>{
+                console.log(data);
+            })
+            .catch(err=>{
+                console.error(err);
+            })
+        }
     }
 }
 </script>
