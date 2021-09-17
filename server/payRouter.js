@@ -1,4 +1,5 @@
 const express = require('express')
+const stripe = require('stripe')('sk_test_51JagpDD9wY2MEDmntfyszYZO56aEtHudBr7s0HHdiauTmQ3mR7itmezE4DBK1A6Jo6RUsbYQvx7FxfiRc9L4EFMv009Z0tTAEq');
 const router = express.Router();
 const paypal = require('paypal-rest-sdk'); // need to be deleted
 const axios = require('axios');
@@ -10,38 +11,39 @@ paypal.configure({
   'client_secret': 'EGdIEZqhCdTE9nQR4uL3RvLBkWgIP2gHiM1sSz3trvh-8kdyo6_VyMBb3f8Lp_jQK-TojLxoXH-xe5Hn' // provide your client secret here 
 });
 
+console.log( `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`);
 // start payment process 
-router.get('/buy' , ( req , res ) => {
+router.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [{
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: 'T-shirt',
+        },
+        unit_amount: 4000,
+      },
+      quantity: 1,
+    },{
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: 'Bite',
+        },
+        unit_amount: 50000,
+      },
+      quantity: 1,
+    }],
+    payment_method_types: [
+      'card',
+    ],
+    mode: 'payment',
+    success_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`,
+    cancel_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/cancel.html`,
+  });
+  res.redirect(303, session.url)
+});
 
-    const token = "A21AALzGHxxq4gJFm6W7L54TrJTTJWUzQRSkP3jfeyrWjG4XUxAPjV6UNDPu9ukozT4giySBe6jAvtixMivCHINUJXjEtfVig"
-	// create payment object 
-    let config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-      }
-      
-      let data = {
-        "intent": "CAPTURE",
-        "purchase_units": [
-          {
-            "amount": {
-              "currency_code": "USD",
-              "value": "100.00"
-            }
-          }
-        ]
-      }
-
-    // A21AAK4pB4wvjcD0X1X6a44sDl_mpknko8pwbI4aggMsZI3_ACCliLbpvgVRHk-yvr2BSGKrlmFf5Zl2Wfjtsdqm8Gx4AkltQ
-    axios.post("https://api-m.sandbox.paypal.com/v2/checkout/orders",data, config)
-    .then(data=>{
-        console.log(data);
-    })
-    .catch(err=>{
-        console.error(err);
-    })
-}); 
 
 
 // success page 
