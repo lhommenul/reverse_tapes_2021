@@ -31,6 +31,14 @@ export default createStore({
     removeProductFromBasket (state,id){
       // console.log(state,id);
       state.basket.products = state.basket.products.filter(product=>product.id!=id);
+    },
+    modifyQuantityProduct(state,product){
+      state.basket.products.forEach(element => {
+        if (element.id === product.id) {
+          element.quantity = product.quantity
+          console.log("founded");
+        }
+      });
     }
   },
   actions: {
