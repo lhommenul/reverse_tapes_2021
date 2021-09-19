@@ -43,7 +43,8 @@ router.post('/create-checkout-session', async (req, res) => {
     success_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`,
     cancel_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/cancel.html`,
   });
-  res.redirect(303, session.url)
+  res.status(200).send(session.url)
+  // res.redirect(303, session.url)
 });
 
 

@@ -64,7 +64,9 @@ export default {
             }
         },
                 getUserInfo(){
-            axios.post(this.$store.state.server_address+"/admin/getuser")
+            axios.post(this.$store.state.server_address+"/admin/getuser",
+            
+            )
             .then(data=>{
                 console.log(data);
                 console.log("get user info payement");
@@ -75,12 +77,11 @@ export default {
         },
         payementRequest(ev){
             ev.preventDefault();
-            axios.post(this.$store.state.server_address+'/pay/create-checkout-session',{
-              
-            })
-            .then(data=>{
-                console.log(data); 
-                
+            
+
+            axios.post(this.$store.state.server_address+'/pay/create-checkout-session')
+            .then(response=>{
+                window.location.href = response.data;
             })
             .catch(err=>{
                 console.error(err);
