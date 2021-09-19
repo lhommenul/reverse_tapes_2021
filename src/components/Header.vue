@@ -54,6 +54,8 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         padding: 0.8rem 1.5rem;
+        align-items: center;
+        max-height: 5rem;
     }
         .logo_header{
             height: 80px;
