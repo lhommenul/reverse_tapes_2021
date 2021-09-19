@@ -42,8 +42,14 @@ router.post('/create-checkout-session', async (req, res) => {
     mode: 'payment',
     success_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`,
     cancel_url: `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/cancel.html`,
-  });
-  res.status(200).send(session.url)
+  })
+  .then(session=>{
+    res.status(200).send(session.url)
+  })
+  .catch(error=>{
+    console.error(error);
+    res.status(500).send({message:"error while asking for stripe"})
+  })
   // res.redirect(303, session.url)
 });
 
