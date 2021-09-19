@@ -55,17 +55,16 @@ export default {
         justify-content: space-between;
         padding: 0.8rem 1.5rem;
         align-items: center;
-        max-height: 5rem;
+        max-height: 3.4rem;
     }
         .logo_header{
-            height: 80px;
-            width: 80px;
+            height: 100%;
         }
         .nav_container{
-            display: flex;
-            flex-direction: row;
-            /* justify-content: center; */
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(2,auto);
+            column-gap: 1.5rem;
+            justify-content: center;
         }
             .link_to_basket{
                 background-color: var(--beige);
@@ -119,8 +118,8 @@ export default {
                 border-style: none;
             }
                 .icon_menu_nav{
-                    height: 50px;
-                    width: 50px;
+                    height: 60%;
+                    max-width: 100%;
                 }
                 .link_container{
                     font-size: 2em;
