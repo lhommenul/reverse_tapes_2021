@@ -2,7 +2,7 @@
     <section class="container uk-container">
 
         <h2 v-if="$store.state.basket.products.length <= 0">Pas de Produits dans le Panier</h2>
-        <form v-else method="POST" v-on:submit="payementRequest" :action="$store.state.server_address+'/pay/create-checkout-session'">
+        <form class="form_products_client" v-else method="POST" v-on:submit="payementRequest" :action="$store.state.server_address+'/pay/create-checkout-session'">
             <ul class="list_options" uk-accordion="multiple: false">
                 <li v-show="steps >= 0" class="uk-open product_list"> <!-- List Products -->
                     <a class="uk-accordion-title" href="#">Liste des Produits</a>
@@ -63,9 +63,9 @@ export default {
                 this.$router.push("/connection");
             }
         },
-                getUserInfo(){
+        getUserInfo(){
             axios.post(this.$store.state.server_address+"/admin/getuser",
-            
+
             )
             .then(data=>{
                 console.log(data);
@@ -77,10 +77,9 @@ export default {
         },
         payementRequest(ev){
             ev.preventDefault();
-            
-
-            axios.post(this.$store.state.server_address+'/pay/create-checkout-session')
-            .then(response=>{
+        
+            axios.post(this.$store.state.server_address+'/pay/create-checkout-session',this.$store.state.basket.products)
+            .then(response=>{ // if the data is ok
                 window.location.href = response.data;
             })
             .catch(err=>{
