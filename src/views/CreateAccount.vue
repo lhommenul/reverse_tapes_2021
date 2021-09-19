@@ -31,7 +31,6 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
             response:{},
             form:{
                 email:undefined,
@@ -49,7 +48,7 @@ export default {
             ev.preventDefault();
 
             axios.post(
-                this.server_address+"/createaccount",
+                this.$store.state.server_address+"/createaccount",
                 this.form,
             )
             .then(data=>{

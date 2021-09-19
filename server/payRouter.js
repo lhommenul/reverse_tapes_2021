@@ -3,12 +3,10 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const router = express.Router();
 const axios = require('axios');
 
-console.log( `${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}/`);
 // start payment process 
 router.post('/create-checkout-session', async (req, res) => {
   // check the client basket 
   checkBasketProduct(req.body);
-
   function checkBasketProduct(params) {
     
   }
@@ -16,7 +14,7 @@ router.post('/create-checkout-session', async (req, res) => {
   function normalizeProducts(list_products) {
     
   }
-
+  console.log("requested");
   // create thhe session for thhe client  
   const session = await stripe.checkout.sessions.create({
     line_items: [{

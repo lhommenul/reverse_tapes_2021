@@ -42,7 +42,6 @@ export default {
         return {
             form:{},
             bands:[],
-            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
         }
     },
     mounted() {
@@ -53,7 +52,7 @@ export default {
     },
     methods: {
         getBands(){
-            axios.get(this.server_address+"/getband")
+            axios.get(this.$store.state.server_address+"/getband")
             .then(data=>{
                 this.bands = data.data;
             })
@@ -70,7 +69,7 @@ export default {
                 let copy = this.form;
                 copy.list_id = list_id;
                 
-                axios.post(this.server_address+"/admin/addband",copy)
+                axios.post(this.$store.state.server_address+"/admin/addband",copy)
                 .then(data=>{
                     console.log(data);
                     this.getBands()
@@ -87,7 +86,7 @@ export default {
                     formData.append("image", input.files[0]);                
                 });
 
-                axios.post(this.server_address+'/admin/addpicture', formData, {
+                axios.post(this.$store.state.server_address+'/admin/addpicture', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -104,7 +103,7 @@ export default {
             }
         },
         deleteBand({id}){
-            axios.post(this.server_address+"/admin/deleteband",{id:id})
+            axios.post(this.$store.state.server_address+"/admin/deleteband",{id:id})
             .then(data=>{
                 console.log(data);
             })

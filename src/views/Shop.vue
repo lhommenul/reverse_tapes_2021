@@ -23,7 +23,6 @@ export default {
   },
   data() {
     return {
-      server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
       products:[]
     }
   },
@@ -32,7 +31,9 @@ export default {
   },
   methods: {
     getProduct(){
-      axios.get(this.server_address+"/getproduct")
+      axios.get(this.$store.state.server_address+"/getproduct",{
+        
+      })
       .then(data=>{
         this.products = data.data;
       })

@@ -48,7 +48,6 @@ import AddPicture from '@/components/panel/AddPicture'
 export default {
     data() {
         return {
-            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
         }
     },
     components:{
@@ -65,7 +64,7 @@ export default {
                 let f = new FormData(form);
                 f.append("list_id",list_id)
 
-                axios.post(this.server_address+"/admin/addprogrammation",f)
+                axios.post(this.$store.state.server_address+"/admin/addprogrammation",f)
                 .then(data=>{
                     console.log(data);
                 })
@@ -83,7 +82,7 @@ export default {
                     formData.append("image", input.files[0]);                
                 });
 
-                axios.post(this.server_address+'/admin/addpicture', formData, {
+                axios.post(this.$store.state.server_address+'/admin/addpicture', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

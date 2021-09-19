@@ -7,7 +7,7 @@ export default createStore({
 
       ]
     },
-    server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
+    server_address:process.env.NODE_ENV==="development"?`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`:"",
   },
   mutations: {
     addProductToBasket (state,product) {

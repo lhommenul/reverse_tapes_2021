@@ -75,16 +75,17 @@ export default {
         },
         payementRequest(ev){
             ev.preventDefault();
-            
             axios.post(this.$store.state.server_address+'/pay/create-checkout-session',{
-
+              
             })
             .then(data=>{
-                console.log(data);
+                console.log(data); 
+                
             })
             .catch(err=>{
                 console.error(err);
             })
+ 
         },
         changeQuantity(ev){
             if (!ev.quantity || ev.quantity <= 0) { //quantity undefined

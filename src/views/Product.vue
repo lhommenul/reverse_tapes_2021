@@ -74,12 +74,11 @@ export default {
   },
   data() {
     return {
-      server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
       product_data:{}
     }
   },
   mounted(){
-    axios.get(this.server_address+"/getproduct?id="+this.$route.query.id)
+    axios.get(this.$store.state.server_address+"/getproduct?id="+this.$route.query.id)
     .then(data=>{
       this.product_data = data.data;
       // this.formatPrice()

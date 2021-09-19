@@ -23,7 +23,6 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            server_address:`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`,
             response:{}
         }
     },
@@ -34,7 +33,7 @@ export default {
             const formData = new FormData(document.querySelector('.form_connection'))
             axios({
                 method:"POST",
-                url:this.server_address+"/connection",
+                url:this.$store.state.server_address+"/connection",
                 data:formData
             })
             .then(data=>{

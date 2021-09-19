@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const User = require('./schema/User');
 
 require('dotenv').config({path:"./.env"}); 
 
@@ -26,7 +27,19 @@ app.use(fileUpload({
 
 //add other middleware
 
-app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
+// app.use(cors());
+
+app.use((req,res,next)=>{
+    console.log(`${process.env.VUE_ADDRESS}:${process.env.VUE_PORT}`);
+    if (req.method === "OPTIONS") {
+        res.setHeader("Access-Control-Allow-Headers",`Origin, Content-Type, X-Auth-Token`)    
+    }
+    
+    res.setHeader("Access-Control-Allow-Credentials",true)
+    res.setHeader("Access-Control-Allow-Methods",'GET, POST, PATCH, PUT, DELETE, OPTIONS')
+    res.setHeader("Access-Control-Allow-Origin",`*`)
+    next()
+})
 
 app.use(cookieParser());
 
