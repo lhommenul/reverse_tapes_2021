@@ -22,22 +22,22 @@
 
         <h2 class="uk-legend title">{{setType()}}</h2>
 
-        <h3 class="price" v-if="this.product_data.price_ttc">{{formatPrice()}}</h3>
+        <h3 class="price" name="price" v-if="this.product_data.price_ttc">{{formatPrice()}}</h3>
         <h3 class="price" v-else>Undefined Price</h3>
 
         <div class="uk-margin">
-            <input class="uk-input" type="number" value="1" placeholder="Quantité">
+            <input  class="uk-input" type="number" name="quantity" value="1" placeholder="Quantité">
         </div>
 
         <div class="uk-margin select_size">
-            <select class="uk-select">
-                <option>Taille L</option>
-                <option>Taille M</option>
-            </select>
+          <select name="size" class="uk-select">
+            <option selected >Taille L</option>
+            <option>Taille M</option>
+          </select>
         </div>
 
         <div class="uk-margin container_btn">
-                <button class="uk-button uk-button-primary">Ajouter au panier</button>
+          <button class="uk-button uk-button-primary">Ajouter au panier</button>
         </div>
 
         <hr class="spacer">
@@ -111,12 +111,13 @@ export default {
     addToBasket(ev){
       ev.preventDefault();
       // console.log(this.product_data.name);
+      const form = new FormData(document.querySelector('.container_form'))
       this.$store.commit("addProductToBasket",{
         id:this.product_data._id,
         name:this.product_data.name,
-        quantity:this.product_data.quantity,
+        quantity:form.get("quantity"),
         thumbnail:this.product_data.thumbnail[0],
-        size:this.product_data.size
+        size:form.get("size")
       })
     }
   }
