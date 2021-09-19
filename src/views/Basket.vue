@@ -1,9 +1,9 @@
 <template>
-    <section>
+    <section class="container">
 
         <h2 v-if="$store.state.basket.products.length <= 0">Pas de Produits dans le Panier</h2>
 
-        <table v-else>
+        <table class="talble_container_products" v-else>
             <thead>
                 <tr>
                     <th>Image</th>
@@ -13,11 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,index) in $store.state.basket.products" :key="index">
-                    <td><img :src="$store.state.server_address+item.thumbnail" alt="basket picture"></td>
+                <tr class="container_product_detail" v-for="(item,index) in $store.state.basket.products" :key="index">
+                    <td><img class="img_product" :src="$store.state.server_address+item.thumbnail" alt="basket picture"></td>
                     <td><p>{{item.name}}</p></td>
-                    <td><p>{{item.quantity}}</p></td>
-                    <td><p>{{item.size}}</p></td>
+                    <td><input class="uk-input" type="number" v-on:change="changeQuantity(item)" min="1" v-model="item.quantity"></td>
+                    <td><p>{{item.size==="undefined"?"":item.size}}</p></td>
                     <button v-on:click="deleteProduct(item.id)">X</button>
                 </tr>
             </tbody>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     methods:{
         deleteProduct(id){
@@ -39,6 +40,26 @@ export default {
             } else {
                 this.$router.push("/connection");
             }
+        },
+        changeQuantity(ev){
+            if (!ev.quantity || ev.quantity <= 0) { //quantity undefined
+                ev.quantity = 1;
+            }else{ // check if the quantity is available
+                // check the quantity product
+                axios.get(this.$store.state.server_address+"/getproduct?id="+ev.id)
+                .then(data=>{
+                    if (ev.quantity > data.data.quantity) {
+                        console.error("quantité disponnible inferieure a la demande");
+                        // display error message and set the value at the max 
+                        ev.quantity = data.data.quantity;
+                    } else {
+                        console.log("all good");
+                    }
+                })
+                .catch(err=>{
+                    console.error(err);
+                })
+            }
         }
     }   
 }
@@ -46,7 +67,12 @@ export default {
 
 <style scoped>
     .basket_product{
-        display: grid;
-        grid-template-columns: repeat(5,20%);
+        
     }
+        .container_product_detail{
+            
+        }
+            .img_product{
+                max-height: 7rem;
+            }
 </style>

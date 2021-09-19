@@ -32,7 +32,12 @@ export default {
     text-align: center;
     color: var(--text_white);
     background-color: var(--back_grey);
+    display: grid;
+    grid-template-columns: auto minmax(20rem,90rem) auto;
   }
+    #app > *{
+      grid-column: 2;
+    }
   .overflow_hidden{
       overflow: hidden;
   }
