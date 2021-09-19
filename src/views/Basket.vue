@@ -44,6 +44,7 @@ export default {
         changeQuantity(ev){
             if (!ev.quantity || ev.quantity <= 0) { //quantity undefined
                 ev.quantity = 1;
+                this.$store.commit("modifyQuantityProduct",ev)
             }else{ // check if the quantity is available
                 // check the quantity product
                 axios.get(this.$store.state.server_address+"/getproduct?id="+ev.id)
@@ -53,6 +54,7 @@ export default {
                         // display error message and set the value at the max 
                         ev.quantity = data.data.quantity;
                     } else {
+                        this.$store.commit("modifyQuantityProduct",ev)
                         console.log("all good");
                     }
                 })
