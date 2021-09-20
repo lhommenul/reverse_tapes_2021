@@ -4,8 +4,8 @@
     <ul class="list_cards">
       <Card
         v-for="(card, index) in cards" :key="index"
-        :height="'49vw'"
-        :width="'49vw'"
+        :height="'40vw'"
+        :width="'40vw'"
         :data="card"
       ></Card>
     </ul>

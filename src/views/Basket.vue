@@ -64,7 +64,7 @@ export default {
             }
         },
         getUserInfo(){
-            axios.post(this.$store.state.server_address+"/admin/getuser",
+            axios.post(this.$store.state.servero_address+"/admin/getuser",
 
             )
             .then(data=>{
