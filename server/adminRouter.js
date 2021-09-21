@@ -8,7 +8,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.use(isAdmin)
+// router.use(isAdmin)
 
 // INSERT
 
@@ -61,10 +61,10 @@ router.use(isAdmin)
 
 
 router.post('/addpicture', async (req, res) => {
-    console.log(req.files);
-        if (req.files) {
 
-            if (!req.files.image.length) { // one image
+        if (req.files) { // files are in the body
+
+            if (!req.files.image.length) { // there is one image
 
                 res.status(200).send(await minifyAndStore(req.files.image.data))
 
@@ -74,6 +74,7 @@ router.post('/addpicture', async (req, res) => {
 
                     try {
                         let list_id_picture = []
+                        
                         for (let index = 0; index < req.files.image.length; index++) {
 
                             const image = req.files.image[index];
@@ -92,7 +93,7 @@ router.post('/addpicture', async (req, res) => {
                 })();
             }
         } else {
-            res.sendStatus(400)
+            res.sendStatus(400).send({message:"error no img in the body"});
         }
 })
 
@@ -105,16 +106,17 @@ router.post('/addproduct', (req, res) => {
         })
         .catch(err=>{
             console.log(err);
+            res.status(400).send({message:"error when minifying images"});
         })
 
     }else{
         console.error("erreur");
-        res.status(400).send({message:"error withh thhe thumbnail"});
+        res.status(400).send({message:"error with the thumbnail"});
     }
 
 
     const pictures = async (data_thumbnail)=>{
-        if (req.files) { // check if there is files
+        if (req.files && req.files.picture) { // check if there is files
 
             if (!req.files.picture.length) { // if there is only one image
                 
@@ -136,7 +138,7 @@ router.post('/addproduct', (req, res) => {
                         addProduct({thumbnail:data_thumbnail,pictures:list_id_picture})
     
                     } catch (error) {   
-    
+                        console.log(error);
                         res.status(400).send({message:"error while adding pictures"});
     
                     }
@@ -144,12 +146,13 @@ router.post('/addproduct', (req, res) => {
                 })();
             }
         } else {
+            console.log("error");
             res.sendStatus(400)
         }        
     }
 
     const addProduct = ({thumbnail,pictures})=>{
-        if (req.body.name && req.body.description && req.body.color && req.body.type && req.body.size  && req.body.price_ttc && req.body.price_ht && req.body.quantity){
+        if (req.body.name && req.body.description && req.body.price_ttc && req.body.price_ht && req.body.quantity){
             Product({
                 name: req.body.name,
                 type: req.body.type,

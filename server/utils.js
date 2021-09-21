@@ -2,12 +2,13 @@ const sharp = require('sharp');
 const db = require('./db');
 const Picture = require('./schema/Picture');
 
-const minifyAndStore = (file_buffer,height=1000,width=1000)=>{
+const minifyAndStore = (file_buffer,height=400,width=400)=>{
     const file_name = `picture_${new Date().getTime()}_${Math.floor(Math.random()*100000)}.webp`;
     const path = `./public/pictures`;
     return new Promise((resolve,reject)=>{
 
         sharp(file_buffer)
+            .resize(width, height)
             .toFile(`${path}/${file_name}`, (err, info) => { 
                 if (err) {
                     throw err;

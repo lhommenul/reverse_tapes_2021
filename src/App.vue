@@ -27,6 +27,9 @@ export default {
     padding: 0px;
     list-style: none;
   }
+  body{
+    max-width: 100vw;
+  }
   #app {
     min-height: 100vh;
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -36,20 +39,12 @@ export default {
     color: var(--text_white);
     background-color: var(--back_grey);
     display: grid;
-    grid-template-columns: auto minmax(20rem,90rem) auto;
+    grid-template-columns: minmax(4%,auto) auto minmax(4%,auto);
   }
     #app > *{
       grid-column: 2;
     }
-  .overflow_hidden{
-      overflow: hidden;
-  }
-  .f_row{
-    display: flex;
-    flex-direction: row;
-  }
-  .f_col{
-    display: flex;
-    flex-direction: column;
+  ul{
+    padding: 0;
   }
 </style>

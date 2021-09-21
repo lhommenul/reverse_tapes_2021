@@ -1,11 +1,15 @@
 <template>
-    <li :style="{height:height,width:width}">
-        <img class="img_card" :src="server_address+data.thumbnail" alt="image">
-        <button class="btn_type" >{{showType()}}</button>
-        <div class="card_window" v-on:click="goTo">
-            <h1>{{data.title}}</h1>
-            <p>{{data.description}}</p>
-        </div>
+    <li class="card_img">
+        <span class="uk-badge">{{showType()}}</span>
+        <div class="uk-inline">
+            <router-link :to="'/product?id='+this.data._id">
+                <img :src="server_address+data.thumbnail" alt="image">
+                <div class="overlay uk-overlay uk-overlay-primary uk-position-bottom">
+                    <h1>{{data.title}}</h1>
+                    <p>{{data.description}}</p> 
+                </div>                
+            </router-link>
+        </div>        
     </li>
 </template>
 
@@ -17,8 +21,6 @@ export default {
         }
     },
     props:{
-        height : String,
-        width : String,
         data : Object,
     },
     mounted(){   
@@ -29,64 +31,47 @@ export default {
             switch (this.data.type) {
                 case 1:
                 return "CD" 
-                    
-            
+                
                 default:
-                    return "Undefined"
+                    return "Inconnu"
             }
         },
-        goTo(){
-            this.$router.push('/product?id='+this.data._id)
-        }
     },
 }
 </script>
 
 <style scoped>
-    li{
+.card_img{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+}
+    .uk-inline{
+        grid-column: 1;
+        grid-row: 1;
         overflow: hidden;
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: auto;
-        height: 100%;
-        width: 100%;
     }
-    li:hover .card_window,li:focus .card_window{
-        height: 100%;
+    .uk-inline:focus-within .overlay, .uk-inline:hover .overlay{
+        transition: 0.3s;
+        transform: translateY(0);
     }
-    li:hover .btn_type,li:focus .btn_type{
-        visibility: hidden;
+    .card_img:focus-within .uk-badge, .card_img:hover .uk-badge{
+        transform: translateY(-200%);
     }
-        .btn_type{
-            padding: 0.4em;
-            border-radius: 25px;
-            border-style: none;
-            margin-left: 1em;
-            margin-top: 1em;
-            justify-self: left;
-            align-self: flex-start;
-            z-index: 2;
-            grid-column: 1;
-            grid-row: 1;
-            max-width:100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: var(--text_white);
+        .overlay{
+            flex-wrap: wrap;
+            transform: translateY(100%);
         }
-        .img_card{
-            z-index: 1;
-            grid-column: 1;
-            grid-row: 1;
-            max-width:100%;;
-        }
-        .card_window{
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 0px;
-            grid-column: 1;
-            grid-row: 1;
-            z-index: 2;
-            background-color: rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-        }
+    .uk-badge{
+        transition: 0.3s;
+        margin-top: 0.6rem;
+        margin-left: 0.6rem;
+        z-index: 100;
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: flex-start;
+        /* position: relative;
+        transform: translate(-30px,30px) */
+    }
 </style>

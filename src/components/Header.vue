@@ -54,11 +54,11 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
     .nav_header{
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       height: 3rem;
-      padding: 0rem 1rem;
     }
       .link_to_home{
         height: 100%;

@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('./db');
 const bcrypt = require('bcrypt');
 const Product = require('./schema/Product')
+const Event = require('./schema/Event')
 const Picture = require('./schema/Picture')
 const User = require('./schema/User')
 const {setToken,checkToken} = require("./auth.js");
@@ -186,6 +187,23 @@ router.get('/getpicture', function (req, res) {
   })
 })
 
+router.get('/getactus', function (req, res) {
+  Promise.all([
+    Product.find().limit(5),
+    Event.find().limit(5)
+  ])
+  .then(response=>{
+    
+    const list_of_actu = response.reduce((accumulateur, current_value)=>{
+      return accumulateur.concat(current_value);
+    },[])
+    
+    res.status(200).send(list_of_actu);
+  })
+  .catch(err=>{
+    console.error(err);
+  })
+})
 
 router.get('/getband', function (req, res) {
   const query = "SELECT * FROM band"
