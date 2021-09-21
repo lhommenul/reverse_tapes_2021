@@ -4,6 +4,7 @@ const db = require('./db');
 const {minifyAndStore} = require('./utils');
 const {isAdmin} = require('./auth');
 const Product = require('./schema/Product')
+const Event = require('./schema/Event')
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -223,19 +224,68 @@ router.post('/addband', (req, res) => {
     }
 })
 
-router.post('/addprogrammation', (req, res) => {
+router.post('/addevent', async (req, res) => {
     
-    if (req.body.name && req.body.description && req.body.location && req.body.event_start && req.body.envent_end && req.body.hour_start && req.body.hour_end){
-        console.log("all data");
-        // let query = `INSERT INTO band (name,description) VALUES ("${req.body.name}","${req.body.description}");`;
+    if (req.body.name && req.body.description && req.body.location && req.body.date_start && req.body.date_end && req.body.hour_start && req.body.hour_end){
+        if (req.files) { // check if there is files 
+            let event = {
+                name: req.body.name,
+                description: req.body.description,
+                location:req.body.location,
+                price:req.body.price,
+                // thumbnail:Array, // 1:1 format 
+                // thumbnail_large:Array, // 4:1
+                // pictures:Array, // // 1:1 format
+                date_start:req.body.date_start,
+                date_end:req.body.date_end,
+                hour_start:req.body.hour_start,
+                hour_end:req.body.hour_end,
+                bands:req.body.bands.reduce((acc,band)=>{ 
+                    try {
+                        return acc.concat(JSON.parse(band))
+                    } catch (error) {
+                        console.error("error");
+                        return acc;
+                    }
+                },[])
+            }
 
-        // db.query(query, function (err, result) {
-        //     if (err) throw err;
-        //     else{
-        //         console.log(result);
-        //         res.status(200).send({message:"Band has been added"});
-        //     }
-        // });
+            if(req.files.thumbnail && req.files.thumbnail_large){
+
+                event.thumbnail_large = ["/static/pictures/"+(await minifyAndStore(req.files.thumbnail.data,575,400)).file_name];
+
+                event.thumbnail = ["/static/pictures/"+(await minifyAndStore(req.files.thumbnail_large.data)).file_name];
+
+            }else if (req.files.thumbnail){ 
+
+                event.thumbnail_large = ["/static/pictures/"+(await minifyAndStore(req.files.thumbnail.data)).file_name];
+
+            }else if (req.files.thumbnail_large){
+
+                event.thumbnail = ["/static/pictures/"+(await minifyAndStore(req.files.thumbnail_large.data,575,400)).file_name];
+
+            }else{
+                res.status(400).send({message:"there is no thumbnail or thumbnail_large"})        
+            }
+
+            try { // save the event in the bdd
+                Event(event)
+                .save()
+                .then(()=>{
+                    res.status(200).send({message:"event saved"})
+                })
+                .catch(error=>{
+                    console.log(error);
+                    res.status(400).send({message:"error while saving the event in the bdd"})            
+                })
+            } catch (error) {
+                res.status(400).send({message:"error while saving the event in the bdd"})            
+            }
+
+        }else{
+            res.status(400).send({message:"there is no files"})    
+        }
+
     }else{
         res.status(400).send({message:"error while checking data in the form"})
     }

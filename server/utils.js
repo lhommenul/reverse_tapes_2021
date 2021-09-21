@@ -31,8 +31,6 @@ const minifyAndStore = (file_buffer,height=400,width=400)=>{
     })
 }
 
-
-
 module.exports = {
     minifyAndStore
 }
