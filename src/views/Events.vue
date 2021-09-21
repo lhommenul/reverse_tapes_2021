@@ -15,7 +15,8 @@
 
 <script>
 // @ is an alias to /src
-  import EventCard from '@/components/EventCard.vue'
+import EventCard from '@/components/EventCard.vue'
+import axios from 'axios'
 export default {
   name: 'Events',
   components: {
@@ -50,6 +51,17 @@ export default {
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
         }
       ]
+    }
+  },
+  methods: {
+    getEvents(){
+      axios.get(this.$store.state.server_address+"/getevents")
+      .then(data=>{
+        console.log(data);
+      })
+      .catch(err=>{
+        console.error(err);
+      })
     }
   },
 }

@@ -215,6 +215,40 @@ router.get('/getband', function (req, res) {
   })
 })
 
+router.get('/getevents', function (req, res) {
+  if (req.query.id) {
+
+    Event.findById({_id:req.query.id})
+    .then(response=>{
+
+      res.status(200).send(response)
+      
+    })
+    .catch(err=>{
+
+      console.error(err);
+      res.status(400).send({message:"event not found"})
+
+    })
+
+  } else {
+
+    Event.find({}).limit(req.query.limit??10).skip(req.query.skip??0)
+    .then(response=>{
+
+      res.status(200).send(response)
+
+    })
+    .catch(err=>{
+
+      console.error(err);
+      res.status(400).send({message:"there is an error in the request"})
+
+    })
+
+  }
+
+})
 
 
 module.exports = router;
