@@ -3,11 +3,11 @@
     <h1 class="title">Programmation</h1>
     <ul class="list_cards">
       <EventCard
-        v-for="(card, index) in cards" :key="index"
+        v-for="(item, index) in cards" :key="index"
         :height="'100%'"
         :width="'80vw'"
         :position="index+1"
-        :data="card"
+        :data="item"
       ></EventCard>
     </ul>
   </div>
@@ -24,40 +24,18 @@ export default {
   },
   data() {
     return {
-      cards:[
-        {
-          type:"T-shirt",
-          title:"Article",
-          to:"/event?id=02023323",
-          img:"/events/event.jpg",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"Album",
-          title:"Article",
-          to:"/event?id=02023323",
-          img:"/events/event_1.png",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"Event",
-          title:"Article",
-          to:"/event?id=02023323",
-          img:"/events/event_3.png",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        },{
-          type:"T-shirt",
-          title:"Article",
-          to:"/event?id=02023323",
-          img:"/events/event_4.png",
-          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia soluta id asperiores impedit iste quaerat corporis odit voluptas quae. Repellendus illum earum minima alias perspiciatis saepe provident, ab quia. Unde."
-        }
-      ]
+      cards:[]
     }
+  },
+  mounted() {
+    this.getEvents()
   },
   methods: {
     getEvents(){
       axios.get(this.$store.state.server_address+"/getevents")
-      .then(data=>{
-        console.log(data);
+      .then(events=>{
+        console.log(events.data);
+        this.cards = events.data;
       })
       .catch(err=>{
         console.error(err);

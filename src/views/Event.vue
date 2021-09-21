@@ -130,6 +130,14 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.getEvent();
+  },
+  methods: {
+    getEvent(){
+      console.log(this.$route.query.id);
+    }
+  },
 }
 </script>
 

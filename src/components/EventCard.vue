@@ -1,7 +1,7 @@
 <template>
-    <li class="prog_card_container" :style="{height:height,width:width,'min-width':width,'grid-column':position}">
-        <router-link :to="data.to">
-            <img class="img_card" :src="data.img" alt="image">
+    <li class="prog_card_container" :style="{'grid-column':position}">
+        <router-link :to="'/event?id='+data._id">
+            <img class="img_card" :src="$store.state.server_address+data?.thumbnail_large?.[0]" alt="image">
         </router-link>
     </li>
 </template>
@@ -23,6 +23,6 @@ export default {
       justify-content: center;
   }
     .img_card{
-        width: 100%;
+        max-height: 100%;
     }
 </style>
