@@ -7,7 +7,7 @@
         <ul class="list_infos">
           <li class="row">
             <img src="@/assets/price_white.svg" alt="icon">
-            <p>Gratuit</p>
+            <p>{{event.price}}</p>
           </li>
           <li class="row">
             <img src="@/assets/location_white.svg" alt="icon">
@@ -15,7 +15,7 @@
           </li>
           <li class="classez row">
             <img src="@/assets/date_white.svg" alt="icon">
-            <p>Jeudi 17 Décembre 2019</p>
+            <p>{{this.event.date_start}}</p>
           </li>
           <li class="row">
             <img src="@/assets/clock_white.svg" alt="icon">
@@ -26,12 +26,12 @@
           </li>
         </ul>
     </div>
-    <div class="container_groupes_info"> <!-- GROUPES -->
+    <div class="container_groupes_info" v-show="event.bands"> <!-- GROUPES -->
       <h2>Groupes</h2>
       <hr>
       <ul class="groupes_list">
         <ArtistCard
-          v-for="(artist, index) in artists" :key="index"
+          v-for="(artist, index) in event.bands" :key="index"
           :height="'120vw'"
           :width="'80vw'"
           :data="artist"
@@ -47,6 +47,7 @@
 <script>
 // @ is an alias to /src
 import ArtistCard from '@/components/ArtistCard.vue'
+import axios from 'axios'
 export default {
   name: 'Event',
   components: {
@@ -54,80 +55,7 @@ export default {
   },
   data() {
     return {
-      artists:[
-        {
-          title:'Grand Veymont',
-          description:'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti ut non nobis magni nostrum consequatur',
-          socials:[
-            {
-              name:'instagram',
-              link:'/instagram'
-            },
-            {
-              name:'youtube',
-              link:'/youtube'
-            },
-            {
-              name:'facebook',
-              link:'/facebook'
-            },
-          ]
-        },
-        {
-          title:'Grand Veymont',
-          description:'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti ut non nobis magni nostrum consequatur',
-          socials:[
-            {
-              name:'instagram',
-              link:'/instagram'
-            },
-            {
-              name:'youtube',
-              link:'/youtube'
-            },
-            {
-              name:'facebook',
-              link:'/facebook'
-            },
-          ]
-        },
-        {
-          title:'Grand Veymont',
-          description:'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti ut non nobis magni nostrum consequatur',
-          socials:[
-            {
-              name:'instagram',
-              link:'/instagram'
-            },
-            {
-              name:'youtube',
-              link:'/youtube'
-            },
-            {
-              name:'facebook',
-              link:'/facebook'
-            },
-          ]
-        },
-        {
-          title:'Grand Veymont',
-          description:'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti ut non nobis magni nostrum consequatur',
-          socials:[
-            {
-              name:'instagram',
-              link:'/instagram'
-            },
-            {
-              name:'youtube',
-              link:'/youtube'
-            },
-            {
-              name:'facebook',
-              link:'/facebook'
-            },
-          ]
-        }
-      ]
+      event:{}
     }
   },
   mounted() {
@@ -135,7 +63,84 @@ export default {
   },
   methods: {
     getEvent(){
-      console.log(this.$route.query.id);
+      axios.get(this.$store.state.server_address+"/getevents?id="+this.$route.query.id)
+      .then(event=>{
+        
+        this.event = event.data;
+        this.event.date_start = this.normalizeDate(event.data.date_start);
+        this.event.date_end = this.normalizeDate(event.data.date_end);
+        this.event.price = this.getPrice(this.event.price);
+
+      })
+      .catch(err=>{
+        console.error(err);
+      })
+
+    },
+    normalizeDate(event){
+      const date = new Date(event)
+
+      return `${this.getDay(date)} ${date.getDay()} ${this.getMonth(date)} ${date.getFullYear()}`;
+
+    },
+    getPrice(price){
+      if (!price || price == 0) {
+        return "Gratuit";
+      } else {
+        return `${price} $`;
+      }
+    },
+    getDay(date){
+      switch (date.getDay()) { // Get the day
+        case 0:
+          return "Lundi";
+        case 1:
+          return "Mardi";
+        case 2:
+          return "Mercredi";        
+        case 3:
+          return "Jeudi";
+        case 4:
+          return "Vendredi";
+        case 5:
+          return "Samedi";                
+        case 6:
+          return "Dimanche";                        
+        default:
+          console.error("error in the day");
+          break;
+      }
+    },
+    getMonth(date){
+      switch (date.getMonth()) { // Get the Month
+        case 0:
+          return "Janvier";
+        case 1:
+          return "Fevrier";
+        case 2:
+          return "Mars";
+        case 3:
+          return "Avril";
+        case 4:
+          return "Mai";
+        case 5:
+          return "Juin";
+        case 6:
+          return "Juillet";
+        case 7:
+          return "Aout";
+        case 8:
+          return "Septembre";
+        case 9:
+          return "Octobre";
+        case 10:
+          return "Novembre";
+        case 11:
+          return "Decembre";                                            
+        default:
+          console.error("error in the month");
+          break;
+      }
     }
   },
 }
