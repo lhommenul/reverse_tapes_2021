@@ -1,6 +1,6 @@
 <template>
-  <Header></Header>
   <router-view/>
+  <Header></Header>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: var(--text_white);
-    background-color: var(--back_grey);
+    background-color: whitesmoke);
     display: grid;
     grid-template-columns: minmax(4%,auto) auto minmax(4%,auto);
   }
