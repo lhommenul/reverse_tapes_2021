@@ -5,8 +5,7 @@
       <EventCard
         v-for="(item, index) in cards" :key="index"
         :height="'100%'"
-        :width="'80vw'"
-        :position="index+1"
+        :width="'100%'"
         :data="item"
       ></EventCard>
     </ul>
@@ -47,12 +46,13 @@ export default {
 
 <style scoped>
   .events{
+    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding-bottom: 5rem;
   }
     .title{
-      margin-left: 1rem;
       text-align: left;
     }
     ul{
@@ -62,15 +62,10 @@ export default {
     .list_cards{
       margin: 0px;
       padding: 0px;
-      margin-top:1rem;
-      margin-left: 1rem;
-      column-gap: 1em;
       list-style: none;
       overflow: scroll;
-      display: flex;
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: 1fr;
+      row-gap: 1rem;
     }
-      .list_cards > li{
-        grid-row: 1;
-      }
 </style>

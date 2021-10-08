@@ -1,5 +1,7 @@
 <template>
-  <router-view/>
+  <div class="uk-container">
+    <router-view/>
+  </div>
   <Header></Header>
 </template>
 
@@ -37,7 +39,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: var(--text_white);
-    background-color: whitesmoke);
+    background-color: whitesmoke;
     display: grid;
     grid-template-columns: minmax(4%,auto) auto minmax(4%,auto);
   }

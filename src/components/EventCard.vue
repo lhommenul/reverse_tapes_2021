@@ -1,5 +1,5 @@
 <template>
-    <li class="prog_card_container" :style="{'grid-column':position}">
+    <li class="prog_card_container">
         <router-link :to="'/event?id='+data._id">
             <img class="img_card" :src="$store.state.server_address+data?.thumbnail_large?.[0]" alt="image">
         </router-link>
@@ -12,7 +12,6 @@ export default {
         height : String,
         width : String,
         data : Object,
-        position:Number
     },
 }
 </script>
@@ -24,5 +23,6 @@ export default {
   }
     .img_card{
         max-height: 100%;
+        width: 100%;
     }
 </style>
