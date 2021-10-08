@@ -46,11 +46,9 @@ export default {
 
 <style scoped>
   .events{
-    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding-bottom: 5rem;
   }
     .title{
       text-align: left;

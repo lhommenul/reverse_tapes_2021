@@ -1,5 +1,6 @@
 <template>
   <article class="container_event">
+    <h1 class="title">{{this.event.name}}</h1>
     <img class="event_img" src="/events/event_1.png" alt="image event">
     <div class="container_information"> <!-- INFORMATIONS -->
         <h2>Informations</h2> 
@@ -148,9 +149,13 @@ export default {
 
 <style scoped>
   .container_event{
-    display: grid;
-    grid-template-columns: 1rem auto 1rem;
+    display: flex;
+    flex-direction: column;
+    color: var(--back_grey);
   }
+    .title{
+      text-align: left;
+    }
     .event_img{
       grid-column: 2;
       max-width: 100%;
@@ -200,7 +205,6 @@ export default {
         background-color: var(--beige);
       }
         .see_more_events > a{
-          color: var(--gack_grey);
           text-decoration: none;
         }
         .row{

@@ -1,5 +1,5 @@
 <template>
-    <section class="container uk-container">
+    <section class="container">
 
         <h2 v-if="$store.state.basket.products.length <= 0">Pas de Produits dans le Panier</h2>
         <form class="form_products_client" v-else method="POST" v-on:submit="payementRequest" :action="$store.state.server_address+'/pay/create-checkout-session'">

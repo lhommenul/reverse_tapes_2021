@@ -2,8 +2,9 @@
   <header class="nav_header">
       <router-link class="nav_header_link" to="/"><img class="nav_header_link_img" src="../assets/icon_home_outlined.svg" alt=""><span class="nav_header_link_info">accueil</span></router-link>
       <router-link class="nav_header_link" to="/events"><img class="nav_header_link_img" src="../assets/icon_event_outlined.svg" alt=""><span class="nav_header_link_info">events</span></router-link>
+      <router-link class="nav_header_link" to="/shop"><img class="nav_header_link_img" src="../assets/icon_store_outlined.svg" alt=""><span class="nav_header_link_info">magasin</span></router-link>
       <router-link class="nav_header_link" to="/account"><img class="nav_header_link_img" src="../assets/icon_account_outlined.svg" alt=""><span class="nav_header_link_info">profile</span></router-link>
-      <router-link class="nav_header_link" to="/shop"><img class="nav_header_link_img" src="../assets/icon_shop_outlined.svg" alt=""><span class="nav_header_link_info">panier</span></router-link>
+      <router-link class="nav_header_link" to="/basket"><img class="nav_header_link_img" src="../assets/icon_shop_outlined.svg" alt=""><span class="nav_header_link_info">panier</span></router-link>
   </header>
 </template>
 
@@ -51,7 +52,7 @@ export default {
   left: 0px;
   right: 0px;
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(5,1fr);
   background-color: whitesmoke;
 }
   .nav_header_link{

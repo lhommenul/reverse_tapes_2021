@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-container">
+  <div class="uk-container content_container">
     <router-view/>
   </div>
   <Header></Header>
@@ -23,6 +23,10 @@ export default {
     --back_grey:#202020;
     --text_white:whitesmoke;
     --beige:#FFF5CA;
+  }
+  .content_container{
+    padding-top: 1.5rem;
+    padding-bottom: 5rem;
   }
   *{
     margin: 0px;
