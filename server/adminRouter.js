@@ -13,54 +13,6 @@ const saltRounds = 10;
 
 // INSERT
 
-
-// router.post('/adduser', async (req, res) =>{
-//     if (req.body.first_name && req.body.name && req.body.email && req.body.password) {
-
-//         bcrypt.hash(req.body.password, saltRounds, function(err, hash) { // Hashing the password
-//             // Store hash in your password DB.
-//             if (err) {
-//                 throw err;
-//             } else {
-
-//                 console.log("Hash has been generated");
-
-//                 const query = `INSERT INTO user (name,first_name,email,password) VALUES ('${req.body.name}','${req.body.first_name}','${req.body.email}','${hash}')`;
-
-//                 db.query(query, function (err, result) {
-//                     if (err) throw err;
-//                     else{
-//                         console.log(result);
-//                         // Token has been generated
-//                         const token = setToken(
-//                             response[0].name,
-//                             response[0].first_name,
-//                             response[0].email,
-//                             response[0].password,
-//                             false
-//                         );
-
-//                         res.cookie("rv_token",token, { maxAge: 900000, httpOnly: true });
-
-//                         res.send("token has been created")
-
-//                     }
-//                 });
-
-//             }
-//         });
-
-//     }else{
-
-//         console.error("no informations");
-
-//     }
-
-//     res.send('ok');
-    
-// })
-
-
 router.post('/addpicture', async (req, res) => {
 
         if (req.files) { // files are in the body
